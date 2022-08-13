@@ -1,0 +1,8 @@
+Options -Indexes
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^admin/ admin.php [L]
+
+ErrorDocument 404 /resto/index.php
