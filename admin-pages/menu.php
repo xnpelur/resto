@@ -1,39 +1,14 @@
 <?php
 
-require_once('../utils.php');
-$db = require('../database.php');
-
 session_start();
 
+$db = require('../database.php');
 $cards = $db->query('SELECT * FROM menu');
 
 if (isset($_SESSION['upload_message'])) {
     $message = $_SESSION['upload_message'];
     $message_type = $_SESSION['upload_message_type'];
     unset($_SESSION['upload_message']);
-}
-
-if (isset($_POST['card-title'])) {
-    
-    if ($path = upload_image($_FILES['card-image'])) {
-        $sql = $db->prepare('INSERT INTO menu (title, description, price, image) VALUES (?, ?, ?, ?)');
-        $sql->bind_param('ssss', $title, $description, $price, $image);
-
-        $title = $_POST['card-title'];
-        $description = $_POST['card-description'];
-        $price = $_POST['card-price'];
-        $image = $path;
-
-        $sql->execute();
-
-        $_SESSION['upload_message'] = 'Блюдо успешно добавлено в меню';
-        $_SESSION['upload_message_type'] = 'success';
-    } else {
-        $_SESSION['upload_message'] = 'Во время загрузки изорбражения возникла ошибка, попробуйте позже';
-        $_SESSION['upload_message_type'] = 'danger';
-    }
-
-    header('Location: ./');
 }
 
 ?>
@@ -60,11 +35,11 @@ if (isset($_POST['card-title'])) {
                     <span class="price">$<?=$card['price']?></span>
                 </div>
                 <p><?=$card['description']?></p>
-                <div class="btn-admin-container">
-                    <button type="button" class="btn btn-danger btn-admin" data-bs-toggle="modal" data-bs-target="#modalDelete" data-card-id="<?=$card['id']?>" onclick="setDeleteButton(this)">
+                <div class="btn-admin-container" data-card-id="<?=$card['id']?>">
+                    <button type="button" class="btn btn-danger btn-admin" onclick="showModal('delete', this)">
                         <i class="fa-solid fa-trash-can"></i> Удалить
                     </button>
-                    <button type="button" class="btn btn-primary btn-admin">
+                    <button type="button" class="btn btn-primary btn-admin" onclick="showModal('change', this)">
                         <i class="fa-solid fa-pencil"></i> Изменить
                     </button>
                 </div>
@@ -73,7 +48,7 @@ if (isset($_POST['card-title'])) {
 
         <?php endforeach; ?>
 
-        <button type="button" class="btn btn-secondary btn-admin-add" style="opacity: 0.5" data-bs-toggle="modal" data-bs-target="#modalAdd">
+        <button type="button" class="btn btn-secondary btn-admin-add" onclick="showModal('add', this)">
             <i class="fa-solid fa-plus"></i> Добавить
         </button>
 
@@ -104,34 +79,32 @@ if (isset($_POST['card-title'])) {
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAddLabel">Добавить товар</h5>
             </div>
-            <form action="./" method="POST" enctype="multipart/form-data">
+            <form action="../api/add-card.php" id="add-form" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="card">Название</label>
-                        <input type="text" class="form-control" name="card-title" id="card-title" required>
+                        <input type="text" class="form-control" id="card-title" name="card-title" required>
                     </div>
                     <div class="form-group">
                         <label for="card-description">Описание</label>
-                        <textarea class="form-control" name="card-description" id="card-description" rows="3" required></textarea>
+                        <textarea class="form-control" id="card-description" name="card-description" rows="3" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="card-price">Цена</label>
-                        <input type="number" class="form-control" name="card-price" id="card-price" step=0.01 required>
+                        <input type="number" class="form-control" id="card-price" name="card-price" step=0.01 required>
                     </div>
                     <div class="form-group">
                         <label for="card-image">Фото</label>
-                        <input type="file" class="form-control" name="card-image" id="card-image" required>
+                        <input type="file" class="form-control" id="card-image" name="card-image" required>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Отмена
                     </button>
-                    <button type="submit" class="btn btn-primary">Подтвердить</button>
+                    <button type="submit" class="btn btn-primary" id="add-form-submit">Подтвердить</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<script src="../js/menu.js"></script>

@@ -26,7 +26,7 @@ function upload_image(array $file)
         return false;
     }
 
-    if (move_uploaded_file($file["tmp_name"], $target_file)) {
+    if (move_uploaded_file($file["tmp_name"], __DIR__ . '/' . $target_file)) {
         // Success
         return $target_file;
     } else {
