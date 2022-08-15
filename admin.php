@@ -58,6 +58,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
     <script src="../js/admin.js"></script>
+
+    <?php 
+
+        session_start();
+
+        if (isset($_SESSION['alert_message'])):
+    ?>
+
+    <div class="alert alert-message alert-<?=$_SESSION['alert_message_type']?>" role="alert">
+        <?=$_SESSION['alert_message']?>
+    </div>
+    <script>
+        setTimeout(() => {
+            $('.alert-message').addClass('transparent');
+        }, 3000);
+    </script>
+
+    <?php
+        unset($_SESSION['alert_message']);
+        unset($_SESSION['alert_message_type']);
+        endif; 
+    ?>
+
+    <script>
+        
+    </script>
 </body>
 
 </html>

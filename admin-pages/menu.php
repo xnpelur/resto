@@ -1,15 +1,7 @@
 <?php
 
-session_start();
-
 $db = require('../database.php');
 $cards = $db->query('SELECT * FROM menu');
-
-if (isset($_SESSION['upload_message'])) {
-    $message = $_SESSION['upload_message'];
-    $message_type = $_SESSION['upload_message_type'];
-    unset($_SESSION['upload_message']);
-}
 
 ?>
 
@@ -62,12 +54,15 @@ if (isset($_SESSION['upload_message'])) {
             <div class="modal-header">
                 <h5 class="modal-title" id="modalDeleteLabel">Вы уверены, что хотите удалить товар?</h5>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Отмена
-                </button>
-                <button type="button" class="btn btn-danger" id="delete-card-button" onclick="deleteCard()">Удалить</button>
-            </div>
+            <form action="../api/delete-card.php" method="POST">
+                <input type="text" class="hidden" name="card-id" id="card-id-delete">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Отмена
+                    </button>
+                    <button type="submit" class="btn btn-danger" id="delete-card-button"">Удалить</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -79,8 +74,9 @@ if (isset($_SESSION['upload_message'])) {
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAddLabel">Добавить товар</h5>
             </div>
-            <form action="../api/add-card.php" id="add-form" method="POST" enctype="multipart/form-data">
+            <form id="add-form" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
+                    <input type="text" class="hidden" name="card-id" id="card-id-change">
                     <div class="form-group">
                         <label for="card">Название</label>
                         <input type="text" class="form-control" id="card-title" name="card-title" required>

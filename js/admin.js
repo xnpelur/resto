@@ -57,12 +57,17 @@ if (mainWrapper) {
 
 function showModal(modalType, button) {
     switch (modalType) {
+
         case 'add':
-            setupModal(modalType);
-            $('#modalAdd').modal('show');
+            $('#modalAddLabel').text('Добавить товар');
+            $('#card-image')[0].required = true;
+            $('#add-form').attr('action', '../api/add-card.php');
+
             $('#card-title')[0].value = '';
             $('#card-description')[0].value = '';
             $('#card-price')[0].value = '';
+
+            $('#modalAdd').modal('show');
             break;
 
         case 'change':
@@ -72,14 +77,16 @@ function showModal(modalType, button) {
                 data: { id: button.parentNode.dataset.cardId },
                 success: function (response) {
                     responseData = JSON.parse(response);
-                    $('#card-title')[0].value = responseData.title;
-                    $('#card-description')[0].value = responseData.description;
-                    $('#card-price')[0].value = responseData.price;
+                    $('#card-id-change').val(button.parentNode.dataset.cardId);
+                    $('#card-title').val(responseData.title);
+                    $('#card-description').val(responseData.description);
+                    $('#card-price').val(responseData.price);
 
-                    setupModal(modalType);
+                    $('#modalAddLabel').text('Изменить товар');
+                    $('#card-image')[0].required = false;
+                    $('#add-form').attr('action', '../api/change-card.php');
+                    
                     $('#modalAdd').modal('show');
-
-                    sessionStorage.setItem('cardToChange', button.parentNode.dataset.cardId);
                 },
                 error: function (err) {
                     console.log(err);
@@ -89,59 +96,7 @@ function showModal(modalType, button) {
 
         case 'delete':
             $('#modalDelete').modal('show');
-            sessionStorage.setItem('cardToDelete', button.parentNode.dataset.cardId);
+            $('#card-id-delete').val(button.parentNode.dataset.cardId);
             break;
     }
 }
-
-function setupModal(modalType) {
-    if (modalType === 'add') {
-        $('#modalAddLabel').text('Добавить товар');
-        $('#card-image')[0].required = true;
-        $('#add-form-submit')[0].type = 'submit';
-        $('#add-form-submit').off('click');
-    } else {
-        $('#modalAddLabel').text('Изменить товар');
-        $('#card-image')[0].required = false;
-        $('#add-form-submit')[0].type = 'button';
-        $('#add-form-submit').bind('click', changeCard);
-    }
-}
-
-// function changeCard() {
-//     let postData = {
-//         'cardId': sessionStorage.getItem('cardToChange'),
-//         'cardTitle': $('#card-title')[0].value,
-//         'cardTitle': $('#card-description')[0].value,
-//         'cardPrice': $('#card-price')[0].value,
-//     }
-//     sessionStorage.removeItem('cardToChange');
-//     $.ajax({
-//         type: 'POST',
-//         url: '../api/change-card.php',
-//         data: { id: cardId },
-//         success: function (response) {
-//             console.log(response);
-//             // location.reload();
-//         },
-//         error: function (err) {
-//             console.log(err);
-//         }
-//     });
-// }
-
-function deleteCard() {
-    let cardId = sessionStorage.getItem('cardToDelete');
-    sessionStorage.removeItem('cardToDelete');
-    $.ajax({
-        type: 'POST',
-        url: '../api/delete-card.php',
-        data: { id: cardId },
-        success: function () {
-            location.reload();
-        },
-        error: function (err) {
-            console.log(err);
-        }
-    });
-};
