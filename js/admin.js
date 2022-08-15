@@ -1,17 +1,10 @@
-let el = document.getElementById("wrapper");
-let toggleButton = document.getElementById("menu-toggle");
-let alertEl = document.getElementsByClassName('alert')[0];
-let mainWrapper = document.getElementById("main-content-wrapper");
+let wrapper = $('#wrapper');
+let toggleButton = $("#menu-toggle");
+let mainWrapper = $("#main-content-wrapper");
 
-toggleButton.onclick = function () {
-    el.classList.toggle("toggled");
-};
-
-if (alertEl) {
-    setTimeout(() => {
-        alertEl.classList.add('transparent');
-    }, 5000);
-}
+toggleButton.click(function () {
+    wrapper.toggleClass("toggled");
+});
 
 function resetActivePage() {
     let buttons = Array.from(document.getElementById('page-buttons').children);
@@ -34,7 +27,7 @@ function showPage(button) {
         type: "GET",
         url: '../admin-pages/' + page + '.php',
         success: function (response) {
-            mainWrapper.innerHTML = response;
+            mainWrapper.html(response);
             document.getElementById('page-title').textContent = pageTitles[page];
             resetActivePage();
             button.classList.add('active');

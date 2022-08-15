@@ -1,3 +1,10 @@
+<?php
+
+$db = require('database.php');
+$cards = $db->query('SELECT * FROM menu');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,131 +99,23 @@
 
     <div class="box-container">
 
+        <?php foreach ($cards as $card): ?>
+
         <div class="box">
             <div class="image">
-                <img src="images/menu-1.jpg" alt="">
+                <img src="<?=$card['image']?>">
             </div>
             <div class="content">
                 <div class="menu-title-container">
-                    <span class="menu-title">Пицца с сыром и пепперони</span>
-                    <span class="price">$12.99</span>
+                    <span class="menu-title"><?=$card['title']?></span>
+                    <span class="price">$<?=$card['price']?></span>
                 </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
+                <p><?=$card['description']?></p>
                 <button class="btn-custom">Добавить в корзину</button>
             </div>
         </div>
 
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-2.jpg" alt="">
-            </div>
-            <div class="content">
-                <div class="menu-title-container">
-                    <span class="menu-title">Пицца с сыром и пепперони</span>
-                    <span class="price">$12.99</span>
-                </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <button class="btn-custom">Добавить в корзину</button>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-3.jpg" alt="">
-            </div>
-            <div class="content">
-                <div class="menu-title-container">
-                    <span class="menu-title">Пицца с сыром и пепперони</span>
-                    <span class="price">$12.99</span>
-                </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <button class="btn-custom">Добавить в корзину</button>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-4.jpg" alt="">
-            </div>
-            <div class="content">
-                <div class="menu-title-container">
-                    <span class="menu-title">Пицца с сыром и пепперони</span>
-                    <span class="price">$12.99</span>
-                </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <button class="btn-custom">Добавить в корзину</button>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-5.jpg" alt="">
-            </div>
-            <div class="content">
-                <div class="menu-title-container">
-                    <span class="menu-title">Пицца с сыром и пепперони</span>
-                    <span class="price">$12.99</span>
-                </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <button class="btn-custom">Добавить в корзину</button>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-6.jpg" alt="">
-            </div>
-            <div class="content">
-                <div class="menu-title-container">
-                    <span class="menu-title">Пицца с сыром и пепперони</span>
-                    <span class="price">$12.99</span>
-                </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <button class="btn-custom">Добавить в корзину</button>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-7.jpg" alt="">
-            </div>
-            <div class="content">
-                <div class="menu-title-container">
-                    <span class="menu-title">Пицца с сыром и пепперони</span>
-                    <span class="price">$12.99</span>
-                </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <button class="btn-custom">Добавить в корзину</button>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-8.jpg" alt="">
-            </div>
-            <div class="content">
-                <div class="menu-title-container">
-                    <span class="menu-title">Пицца с сыром и пепперони</span>
-                    <span class="price">$12.99</span>
-                </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <button class="btn-custom">Добавить в корзину</button>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-9.jpg" alt="">
-            </div>
-            <div class="content">
-                <div class="menu-title-container">
-                    <span class="menu-title">Пицца с сыром и пепперони</span>
-                    <span class="price">$12.99</span>
-                </div>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <button class="btn-custom">Добавить в корзину</button>
-            </div>
-        </div>
+        <?php endforeach; ?>
 
     </div>
 

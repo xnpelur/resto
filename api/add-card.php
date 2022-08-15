@@ -5,8 +5,6 @@ $db = require('../database.php');
 
 session_start();
 
-var_dump($_FILES);
-
 if ($path = upload_image($_FILES['card-image'])) {
     $sql = $db->prepare('INSERT INTO menu (title, description, price, image) VALUES (?, ?, ?, ?)');
     $sql->bind_param('ssss', $title, $description, $price, $image);
