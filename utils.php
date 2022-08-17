@@ -21,7 +21,7 @@ function upload_image(array $file)
         return upload_image($file);
     }
 
-    if ($file['size'] > 500000) {
+    if ($file['size'] > 4000000) {
         // File is too big
         return false;
     }

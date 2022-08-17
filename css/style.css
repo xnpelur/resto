@@ -33,6 +33,10 @@ section:nth-child(even) {
   background: #eee;
 }
 
+hr {
+  color: #999;
+}
+
 .sub-heading {
   text-align: center;
   color: var(--green);
@@ -370,6 +374,7 @@ header .icons #menu-bars {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(37.5rem, 1fr));
   gap: 1.5rem;
+  margin-bottom: 80px;
 }
 
 .menu .box-container .box {
@@ -615,6 +620,21 @@ header .icons #menu-bars {
   align-items: center;
 }
 
+.menu-title-container {
+  display: grid;
+  column-gap: 15px;
+  grid-template-columns: 4fr 1fr;
+  align-items: center;
+}
+
+.slider-button-container {
+  display: grid;
+  column-gap: 15px;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
+  margin-top: 50px;
+}
+
 .menu-title {
   color: var(--black);
   font-size: 2.5rem;
@@ -623,6 +643,10 @@ header .icons #menu-bars {
 .price {
   color: var(--green);
   font-size: 2.5rem;
+}
+
+.slider-price {
+  font-size: 4.5rem !important;
 }
 
 
@@ -837,6 +861,18 @@ header .icons #menu-bars {
   padding-bottom: 15px;
 }
 
+.settings-container {
+  margin: 30px 150px 0px 50px;
+  font-size: 24px;
+}
+
+.settings-row {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 36px;
+  margin: 25px 0;
+}
+
 /* Hide arrows from input number */
 
 /* Chrome, Safari, Edge, Opera */
@@ -877,6 +913,15 @@ input[type=number] {
 
 .hidden {
   display: none;
+}
+
+.special-box-container {
+  /* columns: 4;
+  grid-template-columns: 1fr 1fr 1fr 1fr !important; */
+}
+
+.menu h3 {
+  font-size: 32px;
 }
 
 /* media queries  */

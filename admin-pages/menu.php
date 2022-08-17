@@ -1,21 +1,18 @@
 <?php
 
 $db = require('../database.php');
-$cards = $db->query('SELECT * FROM menu');
+$specialCards = $db->query('SELECT * FROM menu WHERE type = "special"');
+$regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
 
 ?>
 
 <div class="menu">
 
-    <?php if (isset($message)): ?>
-        <div class="alert alert-message alert-<?=$message_type?>" role="alert">
-            <?=$message?>
-        </div>
-    <?php endif; ?>
+    <h3>Особые блюда</h3><hr>
 
     <div class="box-container">
 
-        <?php foreach ($cards as $card): ?>
+        <?php foreach ($specialCards as $card): ?>
 
         <div class="box">
             <div class="image">
@@ -40,7 +37,42 @@ $cards = $db->query('SELECT * FROM menu');
 
         <?php endforeach; ?>
 
-        <button type="button" class="btn btn-secondary btn-admin-add" onclick="showModal('add', this)">
+        <button type="button" class="btn btn-secondary btn-admin-add" data-card-type="special" onclick="showModal('add', this)">
+            <i class="fa-solid fa-plus"></i> Добавить
+        </button>
+
+    </div>
+
+    <h3>Основное меню</h3><hr>
+
+    <div class="box-container">
+
+        <?php foreach ($regularCards as $card): ?>
+
+        <div class="box">
+            <div class="image">
+                <img src="../<?=$card['image']?>" alt="">
+            </div>
+            <div class="content">
+                <div class="menu-title-container">
+                    <span class="menu-title"><?=$card['title']?></span>
+                    <span class="price">$<?=$card['price']?></span>
+                </div>
+                <p><?=$card['description']?></p>
+                <div class="btn-admin-container" data-card-id="<?=$card['id']?>">
+                    <button type="button" class="btn btn-danger btn-admin" onclick="showModal('delete', this)">
+                        <i class="fa-solid fa-trash-can"></i> Удалить
+                    </button>
+                    <button type="button" class="btn btn-primary btn-admin" onclick="showModal('change', this)">
+                        <i class="fa-solid fa-pencil"></i> Изменить
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <?php endforeach; ?>
+
+        <button type="button" class="btn btn-secondary btn-admin-add" data-card-type="regular" onclick="showModal('add', this)">
             <i class="fa-solid fa-plus"></i> Добавить
         </button>
 
@@ -77,6 +109,7 @@ $cards = $db->query('SELECT * FROM menu');
             <form id="add-form" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="text" class="hidden" name="card-id" id="card-id-change">
+                    <input type="text" class="hidden" name="card-type" id="card-type">
                     <div class="form-group">
                         <label for="card">Название</label>
                         <input type="text" class="form-control" id="card-title" name="card-title" required>

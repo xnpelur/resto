@@ -55,6 +55,7 @@ function showModal(modalType, button) {
             $('#modalAddLabel').text('Добавить товар');
             $('#card-image')[0].required = true;
             $('#add-form').attr('action', '../api/add-card.php');
+            $('#card-type').val(button.dataset.cardType);
 
             $('#card-title')[0].value = '';
             $('#card-description')[0].value = '';

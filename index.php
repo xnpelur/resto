@@ -1,7 +1,8 @@
 <?php
 
 $db = require('database.php');
-$cards = $db->query('SELECT * FROM menu');
+$specialCards = $db->query('SELECT * FROM menu WHERE type = "special"');
+$regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
 
 ?>
 
@@ -49,45 +50,28 @@ $cards = $db->query('SELECT * FROM menu');
 
         <div class="swiper-wrapper wrapper">
 
-            <div class="swiper-slide slide">
-                <div class="content">
-                    <span>our special dish</span>
-                    <h3>spicy noodles</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
-                    <a href="#" class="btn-custom">order now</a>
-                </div>
-                <div class="image">
-                    <img src="images/home-img-1.png" alt="">
-                </div>
-            </div>
+        <?php foreach ($specialCards as $card): ?>
 
             <div class="swiper-slide slide">
                 <div class="content">
-                    <span>our special dish</span>
-                    <h3>fried chicken</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
-                    <a href="#" class="btn-custom">order now</a>
+                    <span>Наше особое блюдо</span>
+                    <h3><?=$card['title']?></h3>
+                    <p><?=$card['description']?></p>
+                    <div class="slider-button-container">
+                        <span class="slider-price">$<?=$card['price']?></span>
+                        <div><a href="#" class="btn-custom">Добавить в корзину</a></div>
+                    </div>
                 </div>
                 <div class="image">
-                    <img src="images/home-img-2.png" alt="">
+                    <img src="<?=$card['image']?>">
                 </div>
             </div>
 
-            <div class="swiper-slide slide">
-                <div class="content">
-                    <span>our special dish</span>
-                    <h3>hot pizza</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p>
-                    <a href="#" class="btn-custom">order now</a>
-                </div>
-                <div class="image">
-                    <img src="images/home-img-3.png" alt="">
-                </div>
-            </div>
+        <?php endforeach; ?>
 
         </div>
 
-        <div class="swiper-pagination"></div>
+        <div class="swiper-pagination transparent"></div>
 
     </div>
 
@@ -99,7 +83,7 @@ $cards = $db->query('SELECT * FROM menu');
 
     <div class="box-container">
 
-        <?php foreach ($cards as $card): ?>
+        <?php foreach ($regularCards as $card): ?>
 
         <div class="box">
             <div class="image">
