@@ -1,6 +1,8 @@
 <?php
 
 $db = require('database.php');
+$options = require('options.php');
+
 $specialCards = $db->query('SELECT * FROM menu WHERE type = "special"');
 $regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
 
@@ -12,7 +14,7 @@ $regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resto</title>
+    <title><?=$options['site_name']?></title>
 
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
@@ -27,7 +29,7 @@ $regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
 
 <header>
 
-    <a href="./" class="logo"><i class="fas fa-utensils"></i>resto</a>
+    <a href="./" class="logo"><i class="fas fa-utensils"></i><?=$options['site_name']?></a>
 
     <nav class="navbar">
         <a class="active" href="#home">Главная</a>
@@ -116,9 +118,8 @@ $regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
         </div>
 
         <div class="content">
-            <h3>Самая вкусная еда в городе</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, sequi corrupti corporis quaerat voluptatem ipsam neque labore modi autem, saepe numquam quod reprehenderit rem? Tempora aut soluta odio corporis nihil!</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, nemo. Sit porro illo eos cumque deleniti iste alias, eum natus.</p>
+            <h3><?=$options['about_title']?></h3>
+            <p><?=nl2br($options['about_text'])?></p>
             <div class="icons-container">
                 <div class="icons">
                     <i class="fas fa-shipping-fast"></i>
@@ -273,16 +274,15 @@ $regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
 
         <div class="box">
             <h3>Контактная информация</h3>
-            <a href="#">+123-456-7890</a>
-            <a href="#">+098-765-4321</a>
-            <a href="#">example@gmail.com</a>
+            <a href="tel:<?=$options['phone']?>"><?=$options['phone']?></a>
+            <a href="mailto:<?=$options['email']?>"><?=$options['email']?></a>
         </div>
 
         <div class="box">
             <h3>Социальные сети</h3>
-            <a href="#">Facebook</a>
-            <a href="#">Instagram</a>
-            <a href="#">ВКонтакте</a>
+            <a href="<?=$options['facebook_link']?>">Facebook</a>
+            <a href="<?=$options['instagram_link']?>">Instagram</a>
+            <a href="<?=$options['vk_link']?>">ВКонтакте</a>
         </div>
 
     </div>

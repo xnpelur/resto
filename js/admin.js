@@ -17,7 +17,10 @@ function showPage(button) {
     let pageTitles = {
         'orders': 'Заказы',
         'menu': 'Меню',
-        'settings': 'Настройки'
+        'reviews': 'Отзывы',
+        'about': 'О нас',
+        'options': 'Настройки',
+        'profile': 'Профиль'
     }
 
     let page = button.dataset.page;
@@ -28,6 +31,13 @@ function showPage(button) {
         url: '../admin-pages/' + page + '.php',
         success: function (response) {
             mainWrapper.html(response);
+
+            if (page === 'options') {
+                getOptionValues();
+            } else if (page === 'about') {
+                getAboutValues();
+            }
+
             document.getElementById('page-title').textContent = pageTitles[page];
             resetActivePage();
             button.classList.add('active');
@@ -93,4 +103,42 @@ function showModal(modalType, button) {
             $('#card-id-delete').val(button.parentNode.dataset.cardId);
             break;
     }
+}
+
+function reloadPage() {
+    location.reload();
+}
+
+function getOptionValues() {
+    $.ajax({
+        type: 'GET',
+        url: '../api/get-options.php',
+        success: function (response) {
+            responseData = JSON.parse(response);
+            $('#options-name').val(responseData['site_name']);
+            $('#options-phone').val(responseData['phone']);
+            $('#options-email').val(responseData['email']);
+            $('#options-facebook').val(responseData['facebook_link']);
+            $('#options-instagram').val(responseData['instagram_link']);
+            $('#options-vk').val(responseData['vk_link']);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
+
+function getAboutValues() {
+    $.ajax({
+        type: 'GET',
+        url: '../api/get-options.php',
+        success: function (response) {
+            responseData = JSON.parse(response);
+            $('#about-title').val(responseData['about_title']);
+            $('#about-text').val(responseData['about_text']);
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
 }

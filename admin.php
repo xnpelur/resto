@@ -1,3 +1,10 @@
+<?php
+
+$db = require('database.php');
+$siteName = $db->query('SELECT value FROM options WHERE name = "site_name"')->fetch_object()->value;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,22 +25,31 @@
         <div class="bg-white" id="sidebar-wrapper">
             <div class="list-group list-group-flush my-3">
                 
-                <a href="../" class="logo"><i class="fas fa-utensils"></i>resto</a>
+                <a href="../" class="logo"><i class="fas fa-utensils"></i><?=$siteName?></a>
             
                 <div class="menu-pages" id="page-buttons">
                     <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="orders" onclick="showPage(this)" id="first-page-button">
-                        <i class="fa-solid fa-address-card"></i> Заказы
+                        <i class="fa-solid fa-address-card"></i><span>Заказы</span>
                     </button>
                     <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="menu"  onclick="showPage(this)">
-                        <i class="fa-solid fa-cart-shopping"></i> Меню
+                        <i class="fa-solid fa-cart-shopping"></i><span>Меню</span>
                     </button>
-                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="settings" onclick="showPage(this)">
-                        <i class="fa-solid fa-gear"></i> Настройки
+                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="reviews"  onclick="showPage(this)">
+                        <i class="fa-solid fa-book-open"></i><span>Отзывы</span>
+                    </button>
+                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="about" onclick="showPage(this)">
+                        <i class="fa-solid fa-people-group"></i><span>О нас</span>
+                    </button>
+                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="options" onclick="showPage(this)">
+                        <i class="fa-solid fa-gear"></i><span>Настройки</span>
+                    </button>
+                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="profile" onclick="showPage(this)">
+                        <i class="fas fa-user me-2"></i></i><span>Профиль</span>
                     </button>
                 </div>
 
                 <a href="" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
-                    <i class="fa-solid fa-power-off"></i> Выйти
+                    <i class="fa-solid fa-power-off"></i><span>Выйти</span>
                 </a>
             </div>
         </div>

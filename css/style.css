@@ -715,7 +715,7 @@ header .icons #menu-bars {
 
 #admin-panel .list-group-item {
   border: none;
-  padding: 20px 30px;
+  padding: 20px 25px;
 }
 
 #admin-panel .list-group-item.active {
@@ -723,6 +723,15 @@ header .icons #menu-bars {
   color: #009d63;
   font-weight: bold;
   border: none;
+}
+
+#admin-panel .list-group-item span {
+  padding-left: 30px;
+}
+
+#admin-panel .list-group-item i {
+  position: absolute;
+  top: 24px;
 }
 
 #admin-panel .navbar {
@@ -863,7 +872,22 @@ header .icons #menu-bars {
 
 .settings-container {
   margin: 30px 150px 0px 50px;
+  font-size: 20px;
+}
+
+.settings-container button {
+  font-size: 26px;
+  padding: 5px 15px;
+  margin: 0 15px 10px;
+  border-radius: 7px;
+  box-shadow: 1px 1px 2px 2px lightgray;
+}
+
+.settings-container input, .settings-container textarea {
   font-size: 24px;
+  box-shadow: 0px 0px 1px 1px lightgray;
+  width: 800px;
+  resize: none;
 }
 
 .settings-row {
@@ -915,13 +939,13 @@ input[type=number] {
   display: none;
 }
 
-.special-box-container {
-  /* columns: 4;
-  grid-template-columns: 1fr 1fr 1fr 1fr !important; */
-}
-
 .menu h3 {
   font-size: 32px;
+}
+
+.settings-buttons {
+  float: right;
+  margin-top: 15px;
 }
 
 /* media queries  */
