@@ -92,7 +92,7 @@ $regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         Отмена
                     </button>
-                    <button type="submit" class="btn btn-danger" id="delete-card-button"">Удалить</button>
+                    <button type="submit" class="btn btn-danger" id="delete-card-button">Удалить</button>
                 </div>
             </form>
         </div>

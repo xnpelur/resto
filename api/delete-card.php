@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $db = require('../database.php');
 $image = $db->query('SELECT * FROM menu WHERE id = ' . $_POST['card-id'])->fetch_assoc()['image'];
 $db->query('DELETE FROM menu WHERE id = ' . $_POST['card-id']);
