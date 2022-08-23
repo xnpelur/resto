@@ -1,31 +1,18 @@
-<?php
-
-session_start();
-
-$db = require('database.php');
-$options = require('options.php');
-
-$specialCards = $db->query('SELECT * FROM menu WHERE type = "special"');
-$regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
-$reviews = $db->query('SELECT * FROM reviews');
-
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $options['site_name'] ?></title>
+    <title><?= $options->site_name ?></title>
 
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 
 </head>
 
@@ -33,7 +20,7 @@ $reviews = $db->query('SELECT * FROM reviews');
 
     <header>
 
-        <a href="./" class="logo"><i class="fas fa-utensils"></i><?= $options['site_name'] ?></a>
+        <a href="./" class="logo"><i class="fas fa-utensils"></i><?= $options->site_name ?></a>
 
         <nav class="navbar">
             <a class="active" href="#home">Главная</a>
@@ -44,7 +31,7 @@ $reviews = $db->query('SELECT * FROM reviews');
         </nav>
 
         <div class="icons">
-            <i class="fas fa-bars" id="menu-bars"></i>
+            <i class="fas fa-bars" id="menu-bars" onclick="toggleMenu()"></i>
             <a href="#order" class="fas fa-shopping-cart"></a>
         </div>
 
@@ -61,15 +48,15 @@ $reviews = $db->query('SELECT * FROM reviews');
                     <div class="swiper-slide slide">
                         <div class="content">
                             <span>Наше особое блюдо</span>
-                            <h3><?= $card['title'] ?></h3>
-                            <p><?= $card['description'] ?></p>
+                            <h3><?= $card->title ?></h3>
+                            <p><?= $card->description ?></p>
                             <div class="slider-button-container">
-                                <span class="slider-price">$<?= $card['price'] ?></span>
+                                <span class="slider-price">$<?= $card->price ?></span>
                                 <div><a href="#" class="btn-custom">Добавить в корзину</a></div>
                             </div>
                         </div>
                         <div class="image">
-                            <img src="<?= $card['image'] ?>">
+                            <img src="<?= $card->image ?>">
                         </div>
                     </div>
 
@@ -93,14 +80,14 @@ $reviews = $db->query('SELECT * FROM reviews');
 
                 <div class="box">
                     <div class="image">
-                        <img src="<?= $card['image'] ?>">
+                        <img src="<?= $card->image ?>">
                     </div>
                     <div class="content">
                         <div class="menu-title-container">
-                            <span class="menu-title"><?= $card['title'] ?></span>
-                            <span class="price">$<?= $card['price'] ?></span>
+                            <span class="menu-title"><?= $card->title ?></span>
+                            <span class="price">$<?= $card->price ?></span>
                         </div>
-                        <p><?= $card['description'] ?></p>
+                        <p><?= $card->description ?></p>
                         <button class="btn-custom">Добавить в корзину</button>
                     </div>
                 </div>
@@ -122,8 +109,8 @@ $reviews = $db->query('SELECT * FROM reviews');
             </div>
 
             <div class="content">
-                <h3><?= $options['about_title'] ?></h3>
-                <p><?= nl2br($options['about_text']) ?></p>
+                <h3><?= $options->about_title ?></h3>
+                <p><?= nl2br($options->about_text) ?></p>
                 <div class="icons-container">
                     <div class="icons">
                         <i class="fas fa-shipping-fast"></i>
@@ -152,25 +139,25 @@ $reviews = $db->query('SELECT * FROM reviews');
 
             <div class="swiper-wrapper">
 
-                <?php foreach ($reviews as $review): ?>
-                
-                <div class="swiper-slide slide">
-                    <i class="fas fa-quote-right"></i>
-                    <div class="user">
-                        <img src="<?=$review['image']?>" alt="">
-                        <div class="user-info">
-                            <h3><?=$review['name']?></h3>
-                            <div class="stars">
-                                <i class="fa-star star <?=$review['stars'] == 1 ? 'active' : ''?>"></i>
-                                <i class="fa-star star <?=$review['stars'] == 2 ? 'active' : ''?>"></i>
-                                <i class="fa-star star <?=$review['stars'] == 3 ? 'active' : ''?>"></i>
-                                <i class="fa-star star <?=$review['stars'] == 4 ? 'active' : ''?>"></i>
-                                <i class="fa-star star <?=$review['stars'] == 5 ? 'active' : ''?>"></i>
+                <?php foreach ($reviews as $review) : ?>
+
+                    <div class="swiper-slide slide">
+                        <i class="fas fa-quote-right"></i>
+                        <div class="user">
+                            <img src="<?= $review->image ?>" alt="">
+                            <div class="user-info">
+                                <h3><?= $review->name ?></h3>
+                                <div class="stars">
+                                    <i class="fa-star star <?= $review->stars == 1 ? 'active' : '' ?>"></i>
+                                    <i class="fa-star star <?= $review->stars == 2 ? 'active' : '' ?>"></i>
+                                    <i class="fa-star star <?= $review->stars == 3 ? 'active' : '' ?>"></i>
+                                    <i class="fa-star star <?= $review->stars == 4 ? 'active' : '' ?>"></i>
+                                    <i class="fa-star star <?= $review->stars == 5 ? 'active' : '' ?>"></i>
+                                </div>
                             </div>
                         </div>
+                        <p><?= $review->text ?></p>
                     </div>
-                    <p><?=$review['text']?></p>
-                </div>
 
                 <?php endforeach; ?>
 
@@ -274,15 +261,15 @@ $reviews = $db->query('SELECT * FROM reviews');
 
             <div class="box">
                 <h3>Контактная информация</h3>
-                <a href="tel:<?= $options['phone'] ?>"><?= $options['phone'] ?></a>
-                <a href="mailto:<?= $options['email'] ?>"><?= $options['email'] ?></a>
+                <a href="tel:<?= $options->phone ?>"><?= $options->phone ?></a>
+                <a href="mailto:<?= $options->email ?>"><?= $options->email ?></a>
             </div>
 
             <div class="box">
                 <h3>Социальные сети</h3>
-                <a href="<?= $options['facebook_link'] ?>">Facebook</a>
-                <a href="<?= $options['instagram_link'] ?>">Instagram</a>
-                <a href="<?= $options['vk_link'] ?>">ВКонтакте</a>
+                <a href="<?= $options->facebook_link ?>">Facebook</a>
+                <a href="<?= $options->instagram_link ?>">Instagram</a>
+                <a href="<?= $options->vk_link ?>">ВКонтакте</a>
             </div>
 
         </div>
@@ -291,10 +278,10 @@ $reviews = $db->query('SELECT * FROM reviews');
 
     </section>
 
-    <?php if (isset($_SESSION['alert_message_index'])): ?>
+    <!-- <?php if (isset($_SESSION['alert_message_index'])) : ?>
 
-    <div class="alert alert-message alert-<?=$_SESSION['alert_message_type_index']?>" role="alert">
-        <?=$_SESSION['alert_message_index']?>
+    <div class="alert alert-message alert-<?= $_SESSION['alert_message_type_index'] ?>" role="alert">
+        <?= $_SESSION['alert_message_index'] ?>
     </div>
     <script>
         setTimeout(() => {
@@ -303,15 +290,15 @@ $reviews = $db->query('SELECT * FROM reviews');
     </script>
 
     <?php
-        unset($_SESSION['alert_message_index']);
-        unset($_SESSION['alert_message_type_index']);
-        endif; 
-    ?>
+                unset($_SESSION['alert_message_index']);
+                unset($_SESSION['alert_message_type_index']);
+            endif;
+    ?> -->
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="/js/script.js"></script>
 
 </body>
 

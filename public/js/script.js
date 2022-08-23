@@ -1,7 +1,7 @@
 let menu = document.querySelector('#menu-bars');
 let navbar = document.querySelector('.navbar');
 
-menu.onclick = () => {
+function toggleMenu() {
     menu.classList.toggle('fa-times');
     navbar.classList.toggle('active');
 };
@@ -78,6 +78,12 @@ function toggleSidebar() {
     $('#wrapper').toggleClass('toggled');
 }
 
+function initAdminPages() {
+    let page = sessionStorage.getItem('adminPage') ?? 'orders';
+    let pageButton = $('[data-page=' + page + ']')[0];
+    showPage(pageButton);
+}
+
 function resetActivePage() {
     let buttons = Array.from(document.getElementById('page-buttons').children);
     buttons.forEach((button) => {
@@ -94,23 +100,23 @@ function showPage(button) {
         options: 'Настройки',
         profile: 'Профиль',
     };
+
     let page = button.dataset.page;
     sessionStorage.setItem('adminPage', page);
 
     $.ajax({
         type: 'GET',
-        url: '../admin-pages/' + page + '.php',
+        url: 'partial?name=' + page,
         success: function (response) {
             $('#main-content-wrapper').html(response);
 
-            if (page === 'options') {
-                getOptionValues();
-            } else if (page === 'about') {
-                getAboutValues();
-            }
+            // if (page === 'options') {
+            //     getOptionValues();
+            // } else if (page === 'about') {
+            //     getAboutValues();
+            // }
 
-            document.getElementById('page-title').textContent =
-                pageTitles[page];
+            document.getElementById('page-title').textContent = pageTitles[page];
             resetActivePage();
             button.classList.add('active');
         },
@@ -118,16 +124,6 @@ function showPage(button) {
             console.log(err);
         },
     });
-}
-
-function initAdminPages() {
-    let page = 'orders';
-    if (sessionStorage.getItem('adminPage')) {
-        page = sessionStorage.getItem('adminPage');
-    }
-
-    let firstPageButton = $('[data-page=' + page + ']')[0];
-    showPage(firstPageButton);
 }
 
 function showModal(modalType, button) {
@@ -182,38 +178,4 @@ function showModal(modalType, button) {
 
 function reloadPage() {
     location.reload();
-}
-
-function getOptionValues() {
-    $.ajax({
-        type: 'GET',
-        url: '../api/get-options.php',
-        success: function (response) {
-            responseData = JSON.parse(response);
-            $('#options-name').val(responseData['site_name']);
-            $('#options-phone').val(responseData['phone']);
-            $('#options-email').val(responseData['email']);
-            $('#options-facebook').val(responseData['facebook_link']);
-            $('#options-instagram').val(responseData['instagram_link']);
-            $('#options-vk').val(responseData['vk_link']);
-        },
-        error: function (err) {
-            console.log(err);
-        },
-    });
-}
-
-function getAboutValues() {
-    $.ajax({
-        type: 'GET',
-        url: '../api/get-options.php',
-        success: function (response) {
-            responseData = JSON.parse(response);
-            $('#about-title').val(responseData['about_title']);
-            $('#about-text').val(responseData['about_text']);
-        },
-        error: function (err) {
-            console.log(err);
-        },
-    });
 }

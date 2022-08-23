@@ -1,11 +1,3 @@
-<?php
-
-$db = require('../database.php');
-$specialCards = $db->query('SELECT * FROM menu WHERE type = "special"');
-$regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
-
-?>
-
 <div class="menu">
 
     <h3>Особые блюда</h3><hr>
@@ -16,15 +8,15 @@ $regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
 
         <div class="box">
             <div class="image">
-                <img src="../<?=$card['image']?>" alt="">
+                <img src="../<?=$card->image?>" alt="">
             </div>
             <div class="content">
                 <div class="menu-title-container">
-                    <span class="menu-title"><?=$card['title']?></span>
-                    <span class="price">$<?=$card['price']?></span>
+                    <span class="menu-title"><?=$card->title?></span>
+                    <span class="price">$<?=$card->price?></span>
                 </div>
-                <p><?=$card['description']?></p>
-                <div class="btn-admin-container" data-card-id="<?=$card['id']?>">
+                <p><?=$card->description?></p>
+                <div class="btn-admin-container" data-card-id="<?=$card->id?>">
                     <button type="button" class="btn btn-danger btn-admin" onclick="showModal('delete', this)">
                         <i class="fa-solid fa-trash-can"></i> Удалить
                     </button>
@@ -51,15 +43,15 @@ $regularCards = $db->query('SELECT * FROM menu WHERE type = "regular"');
 
         <div class="box">
             <div class="image">
-                <img src="../<?=$card['image']?>" alt="">
+                <img src="../<?=$card->image?>" alt="">
             </div>
             <div class="content">
                 <div class="menu-title-container">
-                    <span class="menu-title"><?=$card['title']?></span>
-                    <span class="price">$<?=$card['price']?></span>
+                    <span class="menu-title"><?=$card->title?></span>
+                    <span class="price">$<?=$card->price?></span>
                 </div>
-                <p><?=$card['description']?></p>
-                <div class="btn-admin-container" data-card-id="<?=$card['id']?>">
+                <p><?=$card->description?></p>
+                <div class="btn-admin-container" data-card-id="<?=$card->id?>">
                     <button type="button" class="btn btn-danger btn-admin" onclick="showModal('delete', this)">
                         <i class="fa-solid fa-trash-can"></i> Удалить
                     </button>

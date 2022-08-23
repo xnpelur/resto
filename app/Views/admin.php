@@ -1,14 +1,5 @@
-<?php
-
-session_start();
-
-$db = require('database.php');
-$siteName = $db->query('SELECT value FROM options WHERE name = "site_name"')->fetch_object()->value;
-
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
@@ -17,7 +8,7 @@ $siteName = $db->query('SELECT value FROM options WHERE name = "site_name"')->fe
     <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Панель администратора</title>
 </head>
 
@@ -26,17 +17,17 @@ $siteName = $db->query('SELECT value FROM options WHERE name = "site_name"')->fe
         <!-- Sidebar -->
         <div class="bg-white" id="sidebar-wrapper">
             <div class="list-group list-group-flush my-3">
-                
-                <a href="../" class="logo"><i class="fas fa-utensils"></i><?=$siteName?></a>
-            
+
+                <a href="../" class="logo"><i class="fas fa-utensils"></i><?= $siteName ?></a>
+
                 <div class="menu-pages" id="page-buttons">
-                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="orders" onclick="showPage(this)" id="first-page-button">
+                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="orders" onclick="showPage(this)">
                         <i class="fa-solid fa-address-card"></i><span>Заказы</span>
                     </button>
-                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="menu"  onclick="showPage(this)">
+                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="menu" onclick="showPage(this)">
                         <i class="fa-solid fa-cart-shopping"></i><span>Меню</span>
                     </button>
-                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="reviews"  onclick="showPage(this)">
+                    <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="reviews" onclick="showPage(this)">
                         <i class="fa-solid fa-book-open"></i><span>Отзывы</span>
                     </button>
                     <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="about" onclick="showPage(this)">
@@ -55,12 +46,12 @@ $siteName = $db->query('SELECT value FROM options WHERE name = "site_name"')->fe
                 </a>
             </div>
         </div>
-        
+
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle" onclick="toggleSidebar()"></i>
-                    <h2 class="fs-2 m-0" id="page-title"></h2> 
+                    <h2 class="fs-2 m-0" id="page-title"></h2>
                 </div>
 
                 <span class="admin-name"><i class="fas fa-user me-2"></i>Администратор</span>
@@ -70,13 +61,13 @@ $siteName = $db->query('SELECT value FROM options WHERE name = "site_name"')->fe
 
         </div>
     </div>
-    
-    </div>
-    
-    <?php if (isset($_SESSION['alert_message'])): ?>
 
-    <div class="alert alert-message alert-<?=$_SESSION['alert_message_type']?>" role="alert">
-        <?=$_SESSION['alert_message']?>
+    </div>
+
+    <!-- <?php if (isset($_SESSION['alert_message'])) : ?>
+
+    <div class="alert alert-message alert-<?= $_SESSION['alert_message_type'] ?>" role="alert">
+        <?= $_SESSION['alert_message'] ?>
     </div>
     <script>
         setTimeout(() => {
@@ -85,14 +76,14 @@ $siteName = $db->query('SELECT value FROM options WHERE name = "site_name"')->fe
     </script>
 
     <?php
-        unset($_SESSION['alert_message']);
-        unset($_SESSION['alert_message_type']);
-        endif; 
-    ?>
+                unset($_SESSION['alert_message']);
+                unset($_SESSION['alert_message_type']);
+            endif;
+    ?> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
-    <script src="../js/script.js"></script>
+    <script src="/js/script.js"></script>
 
 </body>
 

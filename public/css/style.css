@@ -1024,7 +1024,108 @@ input[type='number'] {
     box-shadow: 1px 1px 2px 2px lightgray;
 }
 
-/* media queries  */
+#notfound {
+    position: relative;
+    height: 100vh;
+}
+
+#notfound .notfound {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.notfound {
+    max-width: 767px;
+    width: 100%;
+    line-height: 1.4;
+    text-align: center;
+    padding: 15px;
+}
+
+.notfound .notfound-404 {
+    position: relative;
+    height: 220px;
+}
+
+.notfound .notfound-404 h1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 195px;
+    font-weight: 300;
+    margin: 0px;
+    background: linear-gradient(130deg, hsl(165, 63%, 60%), var(--green));
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-transform: uppercase;
+}
+
+.notfound h2 {
+    font-size: 38px;
+    font-weight: 200;
+    text-transform: uppercase;
+    margin-top: 0px;
+    margin-bottom: 25px;
+    letter-spacing: 3px;
+}
+
+.notfound p {
+    font-size: 20px;
+    font-weight: 200;
+    margin-top: 0px;
+    margin-bottom: 25px;
+}
+
+.notfound a {
+    color: var(--green);
+    font-weight: 400;
+    text-decoration: none;
+    border-bottom: 1px dashed var(--green);
+    border-radius: 2px;
+}
+
+.notfound-social > a {
+    display: inline-block;
+    height: 60px;
+    line-height: 60px;
+    width: 60px;
+    font-size: 22px;
+    color: var(--green);
+    border: 1px solid #efefef;
+    border-radius: 50%;
+    margin: 3px 8px;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+}
+
+.notfound-social > a:hover {
+    color: #fff;
+    background-color: var(--green);
+    border-color: var(--green);
+}
+
+@media only screen and (max-width: 480px) {
+    .notfound .notfound-404 {
+        position: relative;
+        height: 168px;
+    }
+
+    .notfound .notfound-404 h1 {
+        font-size: 142px;
+    }
+
+    .notfound h2 {
+        font-size: 22px;
+    }
+}
 
 @media (min-width: 768px) {
     #admin-panel #sidebar-wrapper {
