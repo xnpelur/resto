@@ -43,20 +43,20 @@
 
             <div class="swiper-wrapper wrapper">
 
-                <?php foreach ($specialCards as $card) : ?>
+                <?php foreach ($specialMeals as $meal) : ?>
 
                     <div class="swiper-slide slide">
                         <div class="content">
                             <span>Наше особое блюдо</span>
-                            <h3><?= $card->title ?></h3>
-                            <p><?= $card->description ?></p>
+                            <h3><?= $meal->title ?></h3>
+                            <p><?= $meal->description ?></p>
                             <div class="slider-button-container">
-                                <span class="slider-price">$<?= $card->price ?></span>
+                                <span class="slider-price">$<?= $meal->price ?></span>
                                 <div><a href="#" class="btn-custom">Добавить в корзину</a></div>
                             </div>
                         </div>
                         <div class="image">
-                            <img src="<?= $card->image ?>">
+                            <img src="<?= $meal->image ?>">
                         </div>
                     </div>
 
@@ -76,18 +76,18 @@
 
         <div class="box-container">
 
-            <?php foreach ($regularCards as $card) : ?>
+            <?php foreach ($regularMeals as $meal) : ?>
 
                 <div class="box">
                     <div class="image">
-                        <img src="<?= $card->image ?>">
+                        <img src="<?= $meal->image ?>">
                     </div>
                     <div class="content">
                         <div class="menu-title-container">
-                            <span class="menu-title"><?= $card->title ?></span>
-                            <span class="price">$<?= $card->price ?></span>
+                            <span class="menu-title"><?= $meal->title ?></span>
+                            <span class="price">$<?= $meal->price ?></span>
                         </div>
-                        <p><?= $card->description ?></p>
+                        <p><?= $meal->description ?></p>
                         <button class="btn-custom">Добавить в корзину</button>
                     </div>
                 </div>
@@ -175,14 +175,14 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalReviewLabel">Оставить отзыв</h5>
                     </div>
-                    <form action="api/add-review.php" method="POST" enctype="multipart/form-data">
+                    <form action="/add-review" method="POST" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="review-image">Фото</label>
                                 <input type="file" class="form-control" id="review-image" name="review-image" required>
                             </div>
                             <div class="form-group">
-                                <label for="eview-name">Имя</label>
+                                <label for="review-name">Имя</label>
                                 <input type="text" class="form-control" id="review-name" name="review-name" required>
                             </div>
                             <div class="form-group">

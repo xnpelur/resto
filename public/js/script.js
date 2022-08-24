@@ -134,32 +134,33 @@ function showModal(modalType, button) {
 
         case 'add':
             $('#modalAddLabel').text('Добавить товар');
-            $('#card-image')[0].required = true;
-            $('#add-form').attr('action', '../api/add-card.php');
-            $('#card-type').val(button.dataset.cardType);
+            $('#meal-image')[0].required = true;
+            $('#add-form').attr('action', '/add-meal');
+            $('#meal-type').val(button.dataset.mealType);
 
-            $('#card-title')[0].value = '';
-            $('#card-description')[0].value = '';
-            $('#card-price')[0].value = '';
+            $('#meal-title')[0].value = '';
+            $('#meal-description')[0].value = '';
+            $('#meal-price')[0].value = '';
 
             $('#modalAdd').modal('show');
             break;
 
         case 'change':
+            console.log(button.parentNode)
             $.ajax({
                 type: 'GET',
-                url: '../api/get-card.php',
-                data: { id: button.parentNode.dataset.cardId },
+                url: '/get-meal',
+                data: { id: button.parentNode.dataset.id },
                 success: function (response) {
                     responseData = JSON.parse(response);
-                    $('#card-id-change').val(button.parentNode.dataset.cardId);
-                    $('#card-title').val(responseData.title);
-                    $('#card-description').val(responseData.description);
-                    $('#card-price').val(responseData.price);
+                    $('#meal-id-change').val(button.parentNode.dataset.id);
+                    $('#meal-title').val(responseData.title);
+                    $('#meal-description').val(responseData.description);
+                    $('#meal-price').val(responseData.price);
 
                     $('#modalAddLabel').text('Изменить товар');
-                    $('#card-image')[0].required = false;
-                    $('#add-form').attr('action', '../api/change-card.php');
+                    $('#meal-image')[0].required = false;
+                    $('#add-form').attr('action', '/change-meal');
 
                     $('#modalAdd').modal('show');
                 },
@@ -171,7 +172,7 @@ function showModal(modalType, button) {
 
         case 'delete':
             $('#modalDelete').modal('show');
-            $('#card-id-delete').val(button.parentNode.dataset.cardId);
+            $('#delete-id').val(button.parentNode.dataset.id);
             break;
     }
 }

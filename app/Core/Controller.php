@@ -23,4 +23,15 @@ class Controller
     {
         return Application::$app->router->renderView($view, $data);
     }
+
+    protected function getRequestBody()
+    {
+        return Application::$app->request->getBody();
+    }
+
+    protected function redirect($path)
+    {
+        header('Location: ' . $path);
+        exit;
+    }
 }

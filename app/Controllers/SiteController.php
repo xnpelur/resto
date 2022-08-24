@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Application;
 use App\Core\Controller;
 
 class SiteController extends Controller
@@ -9,8 +10,8 @@ class SiteController extends Controller
     public function index()
     {
         $data = [
-            'specialCards'  => $this->menu->get('special'),
-            'regularCards'  => $this->menu->get('regular'),
+            'specialMeals'  => $this->menu->get('special'),
+            'regularMeals'  => $this->menu->get('regular'),
             'reviews'       => $this->reviews->get(),
             'options'       => $this->options->get()
         ];
@@ -29,7 +30,7 @@ class SiteController extends Controller
 
     public function partial()
     {
-        $name = $_GET['name'];
+        $name = $this->getRequestBody()['name'];
 
         if ($name === null) {
             header('Location: /');
@@ -37,8 +38,8 @@ class SiteController extends Controller
 
         $data = [];
         if ($name === 'menu') {
-            $data['specialCards'] = $this->menu->get('special');
-            $data['regularCards'] = $this->menu->get('regular');
+            $data['specialMeals'] = $this->menu->get('special');
+            $data['regularMeals'] = $this->menu->get('regular');
         } else if ($name === 'reviews') {
             $data['reviews'] = $this->reviews->get();
         } else if ($name === 'options' || $name === 'about') {

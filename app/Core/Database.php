@@ -17,15 +17,20 @@ class Database
         $password = '';
         $database = 'resto';
         
-        $dsn = 'mysql:host=' . $hostname . ';dbname=' . $database;
+        $dsn = "mysql:host=$hostname;dbname=$database";
 
         $this->connection = new PDO($dsn, $username, $password);
-        // $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function query(string $sql)
     {
         $result = $this->connection->query($sql);
         return $result->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function executePrepared(string $sql, array $args)
+    {        
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute($args);
     }
 }

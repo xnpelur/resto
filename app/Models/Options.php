@@ -23,4 +23,20 @@ class Options extends Model
 
         return $options; 
     }
+
+    public function set(array $data)
+    {
+        $args = [
+            'site_name' => $data['options-name'] ?? NULL,
+            'phone' => $data['options-phone'] ?? NULL,
+            'email' => $data['options-email'] ?? NULL,
+            'facebook_link' => $data['options-facebook'] ?? NULL,
+            'instagram_link' => $data['options-instagram'] ?? NULL,
+            'vk_link' => $data['options-vk'] ?? NULL,
+            'about_title' => $data['about-title'] ?? NULL,
+            'about_text' => $data['about-text'] ?? NULL
+        ];
+
+        $this->updateColumns('options', $args);
+    }
 }
