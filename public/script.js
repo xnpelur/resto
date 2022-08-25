@@ -68,6 +68,14 @@ var swiper = new Swiper('.review-slider', {
     },
 });
 
+function fadeAllAlerts() {
+    setTimeout(() => {
+        $('.alert-message').addClass('transparent');
+    }, 3000);
+}
+
+fadeAllAlerts();
+
 $('.star').click((event) => {
     $('.form-group .star').removeClass('active');
     event.currentTarget.classList.add('active');
@@ -109,16 +117,10 @@ function showPage(button) {
         url: 'partial?name=' + page,
         success: function (response) {
             $('#main-content-wrapper').html(response);
-
-            // if (page === 'options') {
-            //     getOptionValues();
-            // } else if (page === 'about') {
-            //     getAboutValues();
-            // }
-
             document.getElementById('page-title').textContent = pageTitles[page];
             resetActivePage();
             button.classList.add('active');
+            fadeAllAlerts();
         },
         error: function (err) {
             console.log(err);
@@ -129,11 +131,11 @@ function showPage(button) {
 function showModal(modalType, button) {
     switch (modalType) {
         case 'review':
-            $('#modalReview').modal('show');
+            $('#modal-review').modal('show');
             break;
 
         case 'add':
-            $('#modalAddLabel').text('Добавить товар');
+            $('#modal-add-label').text('Добавить товар');
             $('#meal-image')[0].required = true;
             $('#add-form').attr('action', '/add-meal');
             $('#meal-type').val(button.dataset.mealType);
@@ -142,27 +144,26 @@ function showModal(modalType, button) {
             $('#meal-description')[0].value = '';
             $('#meal-price')[0].value = '';
 
-            $('#modalAdd').modal('show');
+            $('#modal-add').modal('show');
             break;
 
         case 'change':
-            console.log(button.parentNode)
             $.ajax({
                 type: 'GET',
                 url: '/get-meal',
                 data: { id: button.parentNode.dataset.id },
                 success: function (response) {
                     responseData = JSON.parse(response);
-                    $('#meal-id-change').val(button.parentNode.dataset.id);
+                    $('#change-id').val(button.parentNode.dataset.id);
                     $('#meal-title').val(responseData.title);
                     $('#meal-description').val(responseData.description);
                     $('#meal-price').val(responseData.price);
 
-                    $('#modalAddLabel').text('Изменить товар');
+                    $('#modal-add-label').text('Изменить товар');
                     $('#meal-image')[0].required = false;
                     $('#add-form').attr('action', '/change-meal');
 
-                    $('#modalAdd').modal('show');
+                    $('#modal-add').modal('show');
                 },
                 error: function (err) {
                     console.log(err);
@@ -171,7 +172,7 @@ function showModal(modalType, button) {
             break;
 
         case 'delete':
-            $('#modalDelete').modal('show');
+            $('#modal-delete').modal('show');
             $('#delete-id').val(button.parentNode.dataset.id);
             break;
     }

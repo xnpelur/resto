@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
+use App\Core\Application;
 
 class Options extends Model
 {
@@ -37,6 +38,17 @@ class Options extends Model
             'about_text' => $data['about-text'] ?? NULL
         ];
 
+        if (isset($data['about-image']) && $imagePath = $this->uploadImage($data['about-image'])) {
+            $lastImage = $this->get('about_image');
+            $args['about_image'] = $imagePath;
+        }
+
         $this->updateColumns('options', $args);
+
+        if (isset($lastImage)) {
+            $this->checkImage($lastImage);
+        }
+
+        Application::$app->session->setFlashMessage('admin-success', 'Настройки успешно обновлены');
     }
 }

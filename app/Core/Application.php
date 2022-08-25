@@ -10,6 +10,7 @@ class Application
     public Request $request;
     public Response $response;
     public Database $db;
+    public Session $session;
     
     public function __construct($rootPath)
     {
@@ -18,6 +19,7 @@ class Application
         $this->request = new Request();
         $this->response = new Response();
         $this->db = new Database();
+        $this->session = new Session();
         $this->router = new Router($this->request, $this->response);
     }
 

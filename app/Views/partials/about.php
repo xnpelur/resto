@@ -1,14 +1,13 @@
-<form action="/set-options" method="POST">
-    <div class="settings-container">
-        <label for="about-title">Заголовок</label>
-        <input type="text" class="form-control" id="about-title" name="about-title" value="<?= $options->about_title ?>" required>
-        <hr>
-        <label for="about-text">Текст</label>
-        <textarea class="form-control" id="about-text" name="about-text" rows="8" required><?= $options->about_text ?></textarea>
-        <hr>
-    </div>
-    <div class="settings-buttons">
-        <button type="button" class="btn btn-light" onclick="reloadPage()">Отменить</button>
-        <button type="submit" class="btn btn-success">Сохранить</button>
-    </div>
-</form>
+<div class="options">
+    <?php
+    $form = new App\Widgets\Form('/set-options', 'POST', true);
+
+    $form->field('Фото', 'about-image', ['type' => 'file']);
+    $form->field('Заголовок', 'about-title', ['value' => $options->about_title]);
+    $form->field('Текст', 'about-text', ['value' => $options->about_text, 'type' => 'textarea', 'rows' => 8]);
+
+    $form->buttons('form-submit');
+
+    $form->end();
+    ?>
+</div>

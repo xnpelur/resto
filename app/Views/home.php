@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $options->site_name ?></title>
 
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/style.css">
 
 </head>
 
@@ -105,7 +105,7 @@
         <div class="row">
 
             <div class="image">
-                <img src="images/about-img.png" alt="">
+                <img src="<?= $options->about_image ?>" alt="">
             </div>
 
             <div class="content">
@@ -169,44 +169,35 @@
             <button class="btn-custom">Оставить отзыв</button>
         </div>
 
-        <div class="modal top fade" id="modalReview" tabindex="-1" aria-labelledby="modalReviewLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+        <div class="modal top fade" id="modal-review" tabindex="-1" aria-labelledby="modal-review-label" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalReviewLabel">Оставить отзыв</h5>
+                        <h5 class="modal-title" id="modal-review-label">Оставить отзыв</h5>
                     </div>
-                    <form action="/add-review" method="POST" enctype="multipart/form-data">
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="review-image">Фото</label>
-                                <input type="file" class="form-control" id="review-image" name="review-image" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="review-name">Имя</label>
-                                <input type="text" class="form-control" id="review-name" name="review-name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="review-text">Отзыв</label>
-                                <textarea class="form-control" id="review-text" name="review-text" rows="5" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="hidden" name="review-stars" id="review-stars" value="5">
-                                <div class="stars">
-                                    <i class="fa-star star" data-rate="1"></i>
-                                    <i class="fa-star star" data-rate="2"></i>
-                                    <i class="fa-star star" data-rate="3"></i>
-                                    <i class="fa-star star" data-rate="4"></i>
-                                    <i class="fa-star star active" data-rate="5"></i>
-                                </div>
+                    <?php
+                    $form = new App\Widgets\Form('/add-review', 'POST', containFiles: true, isModal: true);
+                    echo '<div class="modal-body">';
+
+                    $form->field('Фото', 'review-image', ['type' => 'file']);
+                    $form->field('Имя', 'review-name');
+                    $form->field('Отзыв', 'review-text', ['type' => 'textarea', 'rows' => 5]);
+
+                    echo '<div class="form-group">';
+                    $form->hiddenField('review-stars', value: 5);
+                    echo '<div class="stars">
+                                <i class="fa-star star" data-rate="1"></i>
+                                <i class="fa-star star" data-rate="2"></i>
+                                <i class="fa-star star" data-rate="3"></i>
+                                <i class="fa-star star" data-rate="4"></i>
+                                <i class="fa-star star active" data-rate="5"></i>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Отмена
-                            </button>
-                            <button type="submit" class="btn btn-primary" id="add-form-submit">Подтвердить</button>
-                        </div>
-                    </form>
+                    </div>';
+
+                    $form->buttons('modal-submit');
+                    $form->end();
+                    ?>
                 </div>
             </div>
         </div>
@@ -278,27 +269,24 @@
 
     </section>
 
-    <!-- <?php if (isset($_SESSION['alert_message_index'])) : ?>
+    <?php if ($message = \App\Core\Application::$app->session->getFlashMessage('home-success')) : ?>
 
-    <div class="alert alert-message alert-<?= $_SESSION['alert_message_type_index'] ?>" role="alert">
-        <?= $_SESSION['alert_message_index'] ?>
-    </div>
-    <script>
-        setTimeout(() => {
-            $('.alert-message').addClass('transparent');
-        }, 3000);
-    </script>
+        <div class="alert alert-message alert-success" role="alert">
+            <?= $message ?>
+        </div>
 
-    <?php
-                unset($_SESSION['alert_message_index']);
-                unset($_SESSION['alert_message_type_index']);
-            endif;
-    ?> -->
+    <?php elseif($message = \App\Core\Application::$app->session->getFlashMessage('home-danger')) : ?>
+
+        <div class="alert alert-message alert-danger" role="alert">
+            <?= $message ?>
+        </div>
+
+    <?php endif; ?>
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
-    <script src="/js/script.js"></script>
+    <script src="/script.js"></script>
 
 </body>
 

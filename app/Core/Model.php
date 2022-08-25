@@ -113,7 +113,8 @@ class Model
     protected function checkImage($image)
     {
         $imageCount = count($this->getFieldsFrom('menu', "image = '$image'"))
-            + count($this->getFieldsFrom('reviews', "image = '$image'"));
+            + count($this->getFieldsFrom('reviews', "image = '$image'"))
+            + count($this->getFieldsFrom('options', "value = '$image'"));
         
         if ($imageCount === 0 && file_exists($image)) {
             unlink($image);

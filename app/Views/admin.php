@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../favicon.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/style.css">
     <title>Панель администратора</title>
 </head>
 
@@ -64,26 +64,23 @@
 
     </div>
 
-    <!-- <?php if (isset($_SESSION['alert_message'])) : ?>
+    <?php if ($message = \App\Core\Application::$app->session->getFlashMessage('admin-success')) : ?>
 
-    <div class="alert alert-message alert-<?= $_SESSION['alert_message_type'] ?>" role="alert">
-        <?= $_SESSION['alert_message'] ?>
-    </div>
-    <script>
-        setTimeout(() => {
-            $('.alert-message').addClass('transparent');
-        }, 3000);
-    </script>
+        <div class="alert alert-message alert-success" role="alert">
+            <?= $message ?>
+        </div>
 
-    <?php
-                unset($_SESSION['alert_message']);
-                unset($_SESSION['alert_message_type']);
-            endif;
-    ?> -->
+    <?php elseif($message = \App\Core\Application::$app->session->getFlashMessage('admin-danger')) : ?>
+
+        <div class="alert alert-message alert-danger" role="alert">
+            <?= $message ?>
+        </div>
+
+    <?php endif; ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
-    <script src="/js/script.js"></script>
+    <script src="/script.js"></script>
 
 </body>
 
