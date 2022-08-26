@@ -1,3 +1,8 @@
+<?php
+use App\Widgets\Form;
+use App\Widgets\Modal;
+use App\Widgets\FlashMessage;
+?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -169,38 +174,31 @@
             <button class="btn-custom">Оставить отзыв</button>
         </div>
 
-        <div class="modal top fade" id="modal-review" tabindex="-1" aria-labelledby="modal-review-label" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
-            <div class="modal-dialog modal-md">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modal-review-label">Оставить отзыв</h5>
-                    </div>
-                    <?php
-                    $form = new App\Widgets\Form('/add-review', 'POST', containFiles: true, isModal: true);
-                    echo '<div class="modal-body">';
+        <?php
+        Modal::open('Оставить отзыв', 'modal-review');
+        Form::open('/add-review', 'POST', containFiles: true);
+        echo '<div class="modal-body">';
 
-                    $form->field('Фото', 'review-image', ['type' => 'file']);
-                    $form->field('Имя', 'review-name');
-                    $form->field('Отзыв', 'review-text', ['type' => 'textarea', 'rows' => 5]);
+        Form::field('Фото', 'review-image', ['type' => 'file', 'minimal' => true]);
+        Form::field('Имя', 'review-name', ['minimal' => true]);
+        Form::field('Отзыв', 'review-text', ['type' => 'textarea', 'rows' => 5, 'minimal' => true]);
 
-                    echo '<div class="form-group">';
-                    $form->hiddenField('review-stars', value: 5);
-                    echo '<div class="stars">
-                                <i class="fa-star star" data-rate="1"></i>
-                                <i class="fa-star star" data-rate="2"></i>
-                                <i class="fa-star star" data-rate="3"></i>
-                                <i class="fa-star star" data-rate="4"></i>
-                                <i class="fa-star star active" data-rate="5"></i>
-                            </div>
-                        </div>
-                    </div>';
-
-                    $form->buttons('modal-submit');
-                    $form->end();
-                    ?>
+        echo '<div class="form-group">';
+        Form::hiddenField('review-stars', value: 5);
+        echo '<div class="stars">
+                    <i class="fa-star star" data-rate="1"></i>
+                    <i class="fa-star star" data-rate="2"></i>
+                    <i class="fa-star star" data-rate="3"></i>
+                    <i class="fa-star star" data-rate="4"></i>
+                    <i class="fa-star star active" data-rate="5"></i>
                 </div>
             </div>
-        </div>
+        </div>';
+
+        Form::buttons('modal-submit');
+        Form::end();
+        Modal::end();
+        ?>
 
     </section>
 
@@ -269,19 +267,7 @@
 
     </section>
 
-    <?php if ($message = \App\Core\Application::$app->session->getFlashMessage('home-success')) : ?>
-
-        <div class="alert alert-message alert-success" role="alert">
-            <?= $message ?>
-        </div>
-
-    <?php elseif($message = \App\Core\Application::$app->session->getFlashMessage('home-danger')) : ?>
-
-        <div class="alert alert-message alert-danger" role="alert">
-            <?= $message ?>
-        </div>
-
-    <?php endif; ?>
+    <?php FlashMessage::show('home') ?>
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

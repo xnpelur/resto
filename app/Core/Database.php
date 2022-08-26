@@ -10,13 +10,11 @@ class Database
 
     public function __construct()
     {
-        // Move this to config file
-        // ------------------------
-        $hostname = 'localhost';
-        $username = 'root';
-        $password = '';
-        $database = 'resto';
-        
+        $hostname = getenv('DB_HOSTNAME') ?? '';
+        $username = getenv('DB_USERNAME') ?? '';
+        $password = getenv('DB_PASSWORD') ?? '';
+        $database = getenv('DB_DATABASE') ?? '';
+
         $dsn = "mysql:host=$hostname;dbname=$database";
 
         $this->connection = new PDO($dsn, $username, $password);

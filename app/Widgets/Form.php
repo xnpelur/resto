@@ -4,26 +4,23 @@ namespace App\Widgets;
 
 class Form
 {
-    private bool $isModal;
-
-    public function __construct(string $action, string $method, bool $containFiles = false, string $id = '', bool $isModal = false)
+    public static function open(string $action, string $method, bool $containFiles = false, string $id = '')
     {
         if ($containFiles) {
             echo "<form action='$action' method='$method' id='$id' enctype='multipart/form-data'>";
         } else {
             echo "<form action='$action' method='$method' id='$id'>";
         }
-
-        $this->isModal = $isModal;
     }
 
-    public function end()
+    public static function end()
     {
         echo '</form>';
     }
 
-    public function field(string $title, string $name, array $attrs = [])
+    public static function field(string $title, string $name, array $attrs = [])
     {
+        $minimal = $attrs['minimal'] ?? false;
         $type = $attrs['type'] ?? 'text';
         $value = $attrs['value'] ?? '';
         $required = $attrs['value'] ?? true;
@@ -48,7 +45,7 @@ class Form
 
         $input = str_replace('*placeholder*', $additionalAttributes, $input);
 
-        if ($this->isModal) {
+        if ($minimal) {
             echo "<div class='form-group'>
                 <label for='$name'>$title</label>
                 $input
@@ -60,9 +57,11 @@ class Form
             </div>
             <hr>";
         }
+
+        unset($minimal);
     }
 
-    public function hiddenField(string $attribute, string $id = '', string $value = '')
+    public static function hiddenField(string $attribute, string $id = '', string $value = '')
     {
         if ($id === '') {
             $id = $attribute;
@@ -70,7 +69,7 @@ class Form
         echo "<input type='text' class='hidden' name='$attribute' id='$id' value='$value'>";
     }
 
-    public function buttons(string $preset)
+    public static function buttons(string $preset)
     {
         switch ($preset) {
             case 'modal-delete':

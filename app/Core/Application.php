@@ -6,9 +6,6 @@ class Application
 {
     public static string $ROOT_DIR;
     public static Application $app;
-    public Router $router;
-    public Request $request;
-    public Response $response;
     public Database $db;
     public Session $session;
     
@@ -16,15 +13,23 @@ class Application
     {
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
-        $this->request = new Request();
-        $this->response = new Response();
+
+        $this->initEnvironmentVariables();
         $this->db = new Database();
         $this->session = new Session();
-        $this->router = new Router($this->request, $this->response);
     }
 
     public function run()
     {
-        echo $this->router->resolve();
+        echo Router::resolve();
+    }
+
+    private function initEnvironmentVariables()
+    {
+        $env = file(self::$ROOT_DIR . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($env as $line) {
+            putenv($line);
+        }
     }
 }

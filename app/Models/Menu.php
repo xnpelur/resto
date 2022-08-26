@@ -31,7 +31,7 @@ class Menu extends Model
 
             Application::$app->session->setFlashMessage('admin-success', 'Блюдо успешно добавлено в меню');
         } else {
-            Application::$app->session->setFlashMessage('admin-danger', 'Во время загрузки изображения возникла ошибка, попробуйте ещё раз');
+            Application::$app->session->setFlashMessage('admin-danger', 'Во время загрузки изображения возникла ошибка');
         }
     }
 

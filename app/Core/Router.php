@@ -6,54 +6,41 @@ use App\Controllers\SiteController;
 
 class Router
 {
-    private Request $request;
-    protected array $routes = [];
+    private static array $routes = [];
 
-    public function __construct(Request $request, Response $response)
+    public static function get($path, $callback)
     {
-        $this->request = $request;
-        $this->response = $response;
+        self::$routes['get'][$path] = $callback;
     }
 
-    public function get($path, $callback)
+    public static function post($path, $callback)
     {
-        $this->routes['get'][$path] = $callback;
+        self::$routes['post'][$path] = $callback;
     }
 
-    public function post($path, $callback)
+    public static function resolve()
     {
-        $this->routes['post'][$path] = $callback;
-    }
+        $path = Request::getPath();
+        $method = Request::getMethod();
 
-    public function resolve()
-    {
-        $path = $this->request->getPath();
-        $method = $this->request->getMethod();
-        $args = [];
-
-        $callback = $this->routes[$method][$path] ?? false;
+        $callback = self::$routes[$method][$path] ?? false;
         if ($callback === false) {
-            $this->response->setStatusCode(404);
+            http_response_code(404);
             $callback = [SiteController::class, 'pageNotFound'];
         }
 
         if (is_string($callback)) {
-            return $this->renderView($callback);
+            return self::renderView($callback);
         }
 
         if (is_array($callback)) {
             $callback[0] = new $callback[0]();
-            if (isset($callback[2])) {
-                // If additional args are set
-                $args = array_slice($callback, 2);
-                $callback = array($callback[0], $callback[1]);
-            }
         }
 
-        return call_user_func_array($callback, $args);
+        return call_user_func($callback);
     }
 
-    public function renderView($view, $data = [])
+    public static function renderView($view, $data = [])
     {
         foreach ($data as $key => $value) {
             $$key = $value;

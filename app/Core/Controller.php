@@ -21,12 +21,12 @@ class Controller
 
     public function render($view, $data = [])
     {
-        return Application::$app->router->renderView($view, $data);
+        return Router::renderView($view, $data);
     }
 
     protected function getRequestBody()
     {
-        return Application::$app->request->getBody();
+        return Request::getBody();
     }
 
     protected function redirect($path)

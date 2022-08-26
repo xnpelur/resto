@@ -1,16 +1,17 @@
+<?php use App\Widgets\Form; ?>
 <div class="options">
     <?php
-    $form = new App\Widgets\Form('/set-options', 'POST');
+    Form::open('/set-options', 'POST');
 
-    $form->field('Название', 'options-name', ['value' => $options->site_name]);
-    $form->field('Телефонный номер', 'options-phone', ['value' => $options->phone]);
-    $form->field('Email', 'options-email', ['value' => $options->email]);
-    $form->field('Ссылка на Facebook', 'options-facebook', ['value' => $options->facebook_link]);
-    $form->field('Ссылка на Instagram', 'options-instagram', ['value' => $options->instagram_link]);
-    $form->field('Ссылка на Вконтакте', 'options-vk', ['value' => $options->vk_link]);
+    Form::field('Название', 'options-name', ['value' => $options->site_name]);
+    Form::field('Телефонный номер', 'options-phone', ['value' => $options->phone]);
+    Form::field('Email', 'options-email', ['value' => $options->email]);
+    Form::field('Ссылка на Facebook', 'options-facebook', ['value' => $options->facebook_link]);
+    Form::field('Ссылка на Instagram', 'options-instagram', ['value' => $options->instagram_link]);
+    Form::field('Ссылка на Вконтакте', 'options-vk', ['value' => $options->vk_link]);
 
-    $form->buttons('form-submit');
+    Form::buttons('form-submit');
     
-    $form->end();
+    Form::end();
     ?>
 </div>

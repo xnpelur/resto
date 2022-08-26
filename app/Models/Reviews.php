@@ -25,7 +25,7 @@ class Reviews extends Model
 
             Application::$app->session->setFlashMessage('home-success', 'Отзыв успешно сохранен');
         } else {
-            Application::$app->session->setFlashMessage('home-danger', 'Во время загрузки изображения возникла ошибка, попробуйте ещё раз');
+            Application::$app->session->setFlashMessage('home-danger', 'Во время загрузки изображения возникла ошибка');
         }
     }
 

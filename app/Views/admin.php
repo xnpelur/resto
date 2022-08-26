@@ -1,3 +1,4 @@
+<?php use App\Widgets\FlashMessage; ?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -64,19 +65,7 @@
 
     </div>
 
-    <?php if ($message = \App\Core\Application::$app->session->getFlashMessage('admin-success')) : ?>
-
-        <div class="alert alert-message alert-success" role="alert">
-            <?= $message ?>
-        </div>
-
-    <?php elseif($message = \App\Core\Application::$app->session->getFlashMessage('admin-danger')) : ?>
-
-        <div class="alert alert-message alert-danger" role="alert">
-            <?= $message ?>
-        </div>
-
-    <?php endif; ?>
+    <?php FlashMessage::show('admin') ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
