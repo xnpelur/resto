@@ -23,46 +23,34 @@ class Model
 
     public function insertTo(string $table, array $args)
     {
-        $sqlPart1 = "INSERT INTO $table (";
-        $sqlPart2 = ") VALUES (";
+        $params = array_keys($args);
+        $placeholders = array_map(fn($s) => ":$s", $params);
 
-        foreach ($args as $key => $value) {
-            $sqlPart1 .= $key . ', ';
-            $sqlPart2 .= ':' . $key . ', ';
-        }
-
-        $sql = substr($sqlPart1, 0, -2) . substr($sqlPart2, 0, -2) . ')';
+        $sql = "INSERT INTO $table (" . implode(', ', $params) . ") VALUES (" . implode(', ', $placeholders) . ")";
 
         $this->db->executePrepared($sql, $args);
     }
 
     public function update(string $table, array $args, int $id)
     {
-        $sql = "UPDATE $table SET ";
-
-        foreach ($args as $key => $value) {
-            $sql .= $key . ' = :' . $key . ', ';
-        }
-
-        $sql = substr($sql, 0, -2) . " WHERE id = $id";
+        $params = array_map(fn($s) => "$s = :$s", array_keys($args));
+        $sql = "UPDATE $table SET " . implode(', ', $params) . " WHERE id = $id";
 
         $this->db->executePrepared($sql, $args);
     }
 
     public function updateColumns($table, array $args)
     {
-        $sql = "UPDATE $table SET value = CASE ";
-
+        $params = [];
         foreach ($args as $key => $value) {
             if ($value === NULL) {
                 unset($args[$key]);
                 continue;
             }
-
-            $sql .= "WHEN name = '$key' THEN :$key ";
+            $params[] = "WHEN name = '$key' THEN :$key";
         }
 
-        $sql .= "ELSE `value` END";
+        $sql = "UPDATE $table SET value = CASE " . implode(' ', $params) . " ELSE `value` END";
 
         $this->db->executePrepared($sql, $args);
     }

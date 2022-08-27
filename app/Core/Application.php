@@ -7,7 +7,6 @@ class Application
     public static string $ROOT_DIR;
     public static Application $app;
     public Database $db;
-    public Session $session;
     
     public function __construct($rootPath)
     {
@@ -16,7 +15,8 @@ class Application
 
         $this->initEnvironmentVariables();
         $this->db = new Database();
-        $this->session = new Session();
+        
+        Session::start();
     }
 
     public function run()
@@ -31,5 +31,10 @@ class Application
         foreach ($env as $line) {
             putenv($line);
         }
+    }
+
+    public function __destruct()
+    {
+        Session::end();
     }
 }

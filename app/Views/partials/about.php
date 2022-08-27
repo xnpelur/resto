@@ -3,7 +3,7 @@
     <?php
     Form::open('/set-options', 'POST', true);
 
-    Form::field('Фото', 'about-image', ['type' => 'file']);
+    Form::field('Фото', 'about-image', ['type' => 'file', 'required' => false]);
     Form::field('Заголовок', 'about-title', ['value' => $options->about_title]);
     Form::field('Текст', 'about-text', ['value' => $options->about_text, 'type' => 'textarea', 'rows' => 8]);
 

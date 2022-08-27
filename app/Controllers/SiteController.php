@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Session;
 use App\Core\Controller;
 
 class SiteController extends Controller
@@ -20,11 +21,20 @@ class SiteController extends Controller
     
     public function admin()
     {
-        $data = [
-            'siteName' => $this->options->get('site_name')
-        ];
-
+        if (Session::tryLogin() === false) {
+            $this->redirect('/login');
+        }
+        
+        $data = [ 'siteName' => $this->options->get('site_name') ];
         $this->render('admin', $data);
+    }
+
+    public function login()
+    {
+        if (Session::tryLogin()) {
+            $this->redirect('/admin');
+        }
+        $this->render('login');
     }
 
     public function partial()
@@ -32,7 +42,7 @@ class SiteController extends Controller
         $name = $this->getRequestBody()['name'];
 
         if ($name === null) {
-            header('Location: /');
+            $this->redirect('/');
         }
 
         $data = [];

@@ -2,15 +2,15 @@
 
 namespace App\Widgets;
 
-use App\Core\Application;
+use App\Core\Session;
 
 class FlashMessage
 {
     public static function show($name)
     {
-        if ($message = Application::$app->session->getFlashMessage("$name-success")) {
+        if ($message = Session::getFlashMessage("$name-success")) {
             $messageType = 'success';
-        } else if ($message = Application::$app->session->getFlashMessage("$name-danger")) {
+        } else if ($message = Session::getFlashMessage("$name-danger")) {
             $messageType = 'danger';
         } else {
             return;
@@ -19,5 +19,12 @@ class FlashMessage
         echo "<div class='alert alert-message alert-$messageType' role='alert'>
             $message
         </div>";
+    }
+
+    public static function showError($name)
+    {
+        if ($message = Session::getFlashMessage("$name-error")) {
+            echo "<p class='error'>$message</p>";
+        }
     }
 }

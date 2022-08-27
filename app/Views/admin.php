@@ -38,11 +38,11 @@
                         <i class="fa-solid fa-gear"></i><span>Настройки</span>
                     </button>
                     <button class="list-group-item list-group-item-action bg-transparent second-text fw-bold" data-page="profile" onclick="showPage(this)">
-                        <i class="fas fa-user me-2"></i></i><span>Профиль</span>
+                        <i class="fas fa-user me-2"></i><span>Профиль</span>
                     </button>
                 </div>
 
-                <a href="" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                <a href="/logout" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
                     <i class="fa-solid fa-power-off"></i><span>Выйти</span>
                 </a>
             </div>

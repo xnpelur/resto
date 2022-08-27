@@ -23,7 +23,7 @@ class Form
         $minimal = $attrs['minimal'] ?? false;
         $type = $attrs['type'] ?? 'text';
         $value = $attrs['value'] ?? '';
-        $required = $attrs['value'] ?? true;
+        $required = $attrs['required'] ?? true;
 
         $input = "<input class='form-control' id='$name' name='$name' type='$type' value='$value'*placeholder* required>";
         if ($type === 'textarea') {
@@ -34,9 +34,9 @@ class Form
             $input = str_replace(' required', '', $input);
         }
         
-        unset($type);
-        unset($value);
-        unset($required);
+        unset($attrs['type']);
+        unset($attrs['value']);
+        unset($attrs['required']);
 
         $additionalAttributes = "";
         foreach ($attrs as $key => $value) {
@@ -58,7 +58,7 @@ class Form
             <hr>";
         }
 
-        unset($minimal);
+        unset($attrs['minimal']);
     }
 
     public static function hiddenField(string $attribute, string $id = '', string $value = '')
@@ -90,6 +90,12 @@ class Form
                 echo "<div class='option-buttons'>
                     <button type='button' class='btn btn-light' onclick='reloadPage()'>Отменить</button>
                     <button type='submit' class='btn btn-success'>Сохранить</button>
+                </div>";
+                break;
+
+            case 'login-button':
+                    echo "<div class='button-wrapper'>
+                    <button type='submit' class='btn btn-success btn-block'>Войти</button>
                 </div>";
                 break;
         }

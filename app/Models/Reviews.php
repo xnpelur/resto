@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Core\Application;
+use App\Core\Session;
 use App\Core\Model;
 
 class Reviews extends Model
@@ -23,9 +23,9 @@ class Reviews extends Model
             ];
             $this->insertTo('reviews', $args);
 
-            Application::$app->session->setFlashMessage('home-success', 'Отзыв успешно сохранен');
+            Session::setFlashMessage('home-success', 'Отзыв успешно сохранен');
         } else {
-            Application::$app->session->setFlashMessage('home-danger', 'Во время загрузки изображения возникла ошибка');
+            Session::setFlashMessage('home-danger', 'Во время загрузки изображения возникла ошибка');
         }
     }
 
@@ -35,6 +35,6 @@ class Reviews extends Model
         $this->deleteFrom('reviews', "id = $id");   
         $this->checkImage($image);
 
-        Application::$app->session->setFlashMessage('admin-success', 'Отзыв успешно удалён');
+        Session::setFlashMessage('admin-success', 'Отзыв успешно удалён');
     }
 }

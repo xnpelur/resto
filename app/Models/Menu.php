@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
-use App\Core\Application;
+use App\Core\Session;
 
 class Menu extends Model
 {
@@ -29,9 +29,9 @@ class Menu extends Model
             ];
             $this->insertTo('menu', $args);
 
-            Application::$app->session->setFlashMessage('admin-success', 'Блюдо успешно добавлено в меню');
+            Session::setFlashMessage('admin-success', 'Блюдо успешно добавлено в меню');
         } else {
-            Application::$app->session->setFlashMessage('admin-danger', 'Во время загрузки изображения возникла ошибка');
+            Session::setFlashMessage('admin-danger', 'Во время загрузки изображения возникла ошибка');
         }
     }
 
@@ -54,7 +54,7 @@ class Menu extends Model
             $this->checkImage($lastImage);
         }
 
-        Application::$app->session->setFlashMessage('admin-success', 'Блюдо успешно изменено');
+        Session::setFlashMessage('admin-success', 'Блюдо успешно изменено');
     }
 
     public function delete(int $id)
@@ -63,6 +63,6 @@ class Menu extends Model
         $this->deleteFrom('menu', "id = $id");   
         $this->checkImage($image);
 
-        Application::$app->session->setFlashMessage('admin-success', 'Блюдо успешно удалено');
+        Session::setFlashMessage('admin-success', 'Блюдо успешно удалено');
     }
 }

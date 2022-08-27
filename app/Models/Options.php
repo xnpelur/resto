@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
-use App\Core\Application;
+use App\Core\Session;
 
 class Options extends Model
 {
@@ -49,6 +49,6 @@ class Options extends Model
             $this->checkImage($lastImage);
         }
 
-        Application::$app->session->setFlashMessage('admin-success', 'Настройки успешно обновлены');
+        Session::setFlashMessage('admin-success', 'Настройки успешно обновлены');
     }
 }

@@ -1,4 +1,1 @@
-# Ignore all uploaded files
-public/storage/
-
 .env

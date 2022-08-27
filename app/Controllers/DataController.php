@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Session;
 use App\Core\Controller;
 
 class DataController extends Controller
@@ -60,5 +61,26 @@ class DataController extends Controller
         $this->options->set($postData);
         
         $this->redirect('/admin');
+    }
+
+    public function login()
+    {
+        $postData = $this->getRequestBody();
+
+        Session::setLoginData($postData);
+        $result = Session::tryLogin();
+
+        if ($result) {
+            $this->redirect('/admin');
+        } else {
+            Session::setFlashMessage('login-error', 'Неверный логин или пароль');
+            $this->redirect('/login');
+        }
+    }
+
+    public function logout()
+    {
+        Session::logout();
+        $this->redirect('/');
     }
 }
