@@ -39,6 +39,10 @@ class SiteController extends Controller
 
     public function partial()
     {
+        if (Session::tryLogin() === false) {
+            $this->pageNotFound();
+        }
+
         $name = $this->getRequestBody()['name'];
 
         if ($name === null) {
@@ -53,17 +57,10 @@ class SiteController extends Controller
             $data['reviews'] = $this->reviews->get();
         } else if ($name === 'options' || $name === 'about') {
             $data['options'] = $this->options->get();
+        } else if ($name === 'profile') {
+            $data['profile'] = $this->admin->getAdminData();
         }
 
         $this->render('partials/' . $name, $data);
-    }
-
-    public function pageNotFound()
-    {
-        $data = [
-            'options' => $this->options->get()
-        ];
-
-        $this->render('404', $data);
     }
 }

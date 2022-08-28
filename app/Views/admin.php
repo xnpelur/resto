@@ -54,8 +54,6 @@
                     <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle" onclick="toggleSidebar()"></i>
                     <h2 class="fs-2 m-0" id="page-title"></h2>
                 </div>
-
-                <span class="admin-name"><i class="fas fa-user me-2"></i>Администратор</span>
             </nav>
 
             <div id="main-content-wrapper"></div>

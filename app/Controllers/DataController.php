@@ -17,6 +17,10 @@ class DataController extends Controller
 
     public function getMeal()
     {
+        if (Session::tryLogin() === false) {
+            $this->pageNotFound();
+        }
+        
         $id = $this->getRequestBody()['id'];
         $meal = $this->menu->getMeal($id)[0];
 
@@ -81,6 +85,14 @@ class DataController extends Controller
     public function logout()
     {
         Session::logout();
-        $this->redirect('/');
+        $this->redirect('/login');
+    }
+
+    public function setAdmin()
+    {
+        $postData = $this->getRequestBody();
+        $this->admin->setAdminData($postData);
+        
+        $this->redirect('/admin');
     }
 }

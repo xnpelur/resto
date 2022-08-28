@@ -18,3 +18,4 @@ Router::post('/delete-review', [DataController::class, 'deleteReview']);
 Router::post('/set-options', [DataController::class, 'setOptions']);
 Router::post('/login', [DataController::class, 'login']);
 Router::get('/logout', [DataController::class, 'logout']);
+Router::post('/set-admin', [DataController::class, 'setAdmin']);

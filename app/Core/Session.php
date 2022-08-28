@@ -33,7 +33,7 @@ class Session
     public static function setLoginData(array $data)
     {
         $_SESSION['login'] = $data['login'];
-        $_SESSION['password'] = $data['password'];
+        $_SESSION['password'] = $data['password'] ?? $_SESSION['password'];
     }
 
     public static function tryLogin()

@@ -823,14 +823,6 @@ header .icons #menu-bars {
     height: 60%;
 }
 
-#admin-panel .admin-name {
-    color: rgba(0, 0, 0, 0.55);
-    padding-right: 8px;
-    padding-left: 8px;
-    font-weight: 700;
-    text-align: right;
-}
-
 #admin-panel .order-table {
     font-size: 20px;
     table-layout: fixed;
@@ -947,6 +939,12 @@ header .icons #menu-bars {
     margin: 8px 0;
 }
 
+.options h2 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
 .option-buttons {
     float: right;
     margin: 20px 15% 0 0;
@@ -960,16 +958,12 @@ header .icons #menu-bars {
     box-shadow: 1px 1px 2px 2px lightgray;
 }
 
-/* Hide arrows from input number */
-
-/* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Firefox */
 input[type='number'] {
     -moz-appearance: textfield;
 }

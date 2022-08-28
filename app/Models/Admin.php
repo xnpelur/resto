@@ -7,29 +7,59 @@ use App\Core\Model;
 
 class Admin extends Model
 {
-    private static $isAuthorized = false;
-    
     public function verifyLoginData(array $data)
     {
-        $correctLoginData = $this->getLoginData();
-        self::$isAuthorized = $data['login'] == $correctLoginData['login'] && password_verify($data['password'], $correctLoginData['password']);
-        
-        if (self::$isAuthorized) {
+        $correctLoginData = $this->getAdminData();
+        $isAuthorized = $data['login'] == $correctLoginData->login 
+            && password_verify($data['password'], $correctLoginData->password);
+
+        if ($isAuthorized) {
             Session::setLoginData($data);
             return true;
         }
         return false;
     }
-    
-    private function getLoginData()
+
+    public function getAdminData()
     {
         $queryResult = $this->getFieldsFrom('admin');
-        $loginData = [];
+        $dataArray = [];
 
         foreach ($queryResult as $element) {
-            $loginData[$element->name] = $element->value;
+            $dataArray[$element->name] = $element->value;
         }
 
-        return $loginData; 
+        $data = (object)$dataArray;
+
+        return $data;
+    }
+
+    public function setAdminData($data)
+    {
+        if ($data['admin-password'] !== $data['admin-password-confirm']) {
+            Session::setFlashMessage('admin-danger', 'Пароли не совпадают');
+            return;
+        }
+
+        if ($data['admin-login'] === '') {
+            Session::setFlashMessage('admin-danger', 'Логин не может быть пустым');
+            return;
+        }
+        
+        $args = [
+            'login' => $data['admin-login']
+        ];
+        
+        if ($data['admin-password'] !== '') {
+            $args['password'] = password_hash($data['admin-password'], PASSWORD_DEFAULT);
+        }
+        
+        $this->updateColumns('admin', $args);
+        Session::setLoginData([
+            'login' => $data['admin-login'],
+            'password' => $data['admin-password'] !== '' ? $data['admin-password'] : NULL
+        ]);
+
+        Session::setFlashMessage('admin-success', 'Данные для входа успешно обновлены');
     }
 }
