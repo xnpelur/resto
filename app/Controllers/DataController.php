@@ -17,10 +17,6 @@ class DataController extends Controller
 
     public function getMeal()
     {
-        if (Session::tryLogin() === false) {
-            $this->pageNotFound();
-        }
-        
         $id = $this->getRequestBody()['id'];
         $meal = $this->menu->getMeal($id)[0];
 
@@ -55,7 +51,7 @@ class DataController extends Controller
     {
         $id = $this->getRequestBody()['review-id'];
         $this->reviews->delete($id);
-        
+
         $this->redirect('/admin');
     }
 
@@ -63,7 +59,7 @@ class DataController extends Controller
     {
         $postData = $this->getRequestBody();
         $this->options->set($postData);
-        
+
         $this->redirect('/admin');
     }
 
@@ -92,7 +88,32 @@ class DataController extends Controller
     {
         $postData = $this->getRequestBody();
         $this->admin->setAdminData($postData);
-        
+
         $this->redirect('/admin');
+    }
+
+    public function addToCart()
+    {
+        $data = $this->getRequestBody();
+        $data['count'] = 1;
+        $meal = (object)$data;
+        Session::addToShoppingCart($meal);
+    }
+
+    public function changeCartCount()
+    {
+        $postData = $this->getRequestBody();
+        Session::changeCartCount($postData);
+    }
+
+    public function deleteCartMeal()
+    {
+        $id = $this->getRequestBody()['id'];
+        Session::deleteCartMeal($id);
+    }
+
+    public function getCartTotalAmount()
+    {
+        echo Session::getCartTotalAmount();
     }
 }

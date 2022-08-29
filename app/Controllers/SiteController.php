@@ -39,10 +39,6 @@ class SiteController extends Controller
 
     public function partial()
     {
-        if (Session::tryLogin() === false) {
-            $this->pageNotFound();
-        }
-
         $name = $this->getRequestBody()['name'];
 
         if ($name === null) {
@@ -62,5 +58,25 @@ class SiteController extends Controller
         }
 
         $this->render('partials/' . $name, $data);
+    }
+
+    public function getCart()
+    {
+        $cart = Session::getShoppingCart();
+
+        $data = [
+            'cart' => $cart
+        ];
+
+        $this->render('partials/cart', $data);
+    }
+
+    public function pageNotFound()
+    {
+        $data = [
+            'options' => $this->options->get()
+        ];
+        
+        $this->render('404', $data);
     }
 }

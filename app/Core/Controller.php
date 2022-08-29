@@ -27,15 +27,6 @@ class Controller
         return Router::renderView($view, $data);
     }
 
-    public function pageNotFound()
-    {
-        $data = [
-            'options' => $this->options->get()
-        ];
-        
-        $this->render('404', $data);
-    }
-
     protected function getRequestBody()
     {
         return Request::getBody();

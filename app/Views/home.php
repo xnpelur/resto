@@ -1,4 +1,5 @@
 <?php
+
 use App\Widgets\Form;
 use App\Widgets\Modal;
 use App\Widgets\FlashMessage;
@@ -38,6 +39,7 @@ use App\Widgets\FlashMessage;
         <div class="icons">
             <i class="fas fa-bars" id="menu-bars" onclick="toggleMenu()"></i>
             <a href="#order" class="fas fa-shopping-cart"></a>
+            <span id="cart-counter"></span>
         </div>
 
     </header>
@@ -57,7 +59,7 @@ use App\Widgets\FlashMessage;
                             <p><?= $meal->description ?></p>
                             <div class="slider-button-container">
                                 <span class="slider-price">$<?= $meal->price ?></span>
-                                <div><a href="#" class="btn-custom">Добавить в корзину</a></div>
+                                <div><button class="btn-custom" onclick='addToCart(<?= json_encode($meal) ?>)'>Добавить в корзину</button></div>
                             </div>
                         </div>
                         <div class="image">
@@ -93,7 +95,7 @@ use App\Widgets\FlashMessage;
                             <span class="price">$<?= $meal->price ?></span>
                         </div>
                         <p><?= $meal->description ?></p>
-                        <button class="btn-custom">Добавить в корзину</button>
+                        <button class="btn-custom" onclick='addToCart(<?= json_encode($meal) ?>)'>Добавить в корзину</button>
                     </div>
                 </div>
 
@@ -206,41 +208,7 @@ use App\Widgets\FlashMessage;
 
         <h1 class="heading">Заказать</h1>
 
-        <form action="">
-
-            <!-- <div class="inputBox">
-            <div class="input">
-                <span>Ваше имя</span>
-                <input type="text" placeholder="enter your name">
-            </div>
-        </div>
-        <div class="inputBox">
-            <div class="input">
-                <span>Ваш номер телефона</span>
-                <input type="text" placeholder="enter food name">
-            </div>
-        </div>
-        <div class="inputBox">
-            <div class="input">
-                <span>Ваш адрес</span>
-                <input type="number" placeholder="how many orders">
-            </div>
-        </div>
-        <div class="inputBox">
-            <div class="input">
-                <span>Ваш заказ</span>
-                <textarea name="" placeholder="enter your message" id="" cols="30" rows="10"></textarea>
-            </div>
-        </div>
-
-        <input type="submit" value="order now" class="btn-custom"> -->
-
-            <div class="empty-cart">
-                <h3>В вашей корзине пусто</h3>
-                <a href="#menu" class="btn-custom">Перейти к меню</a>
-            </div>
-
-        </form>
+        <div id="cart-wrapper"></div>
 
     </section>
 

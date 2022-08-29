@@ -3,6 +3,9 @@ let navLinks = $('header .navbar a').toArray();
 let menuBars = $('#menu-bars');
 let navbar = $('.navbar');
 
+fadeAllAlerts();
+updateCart();
+
 if (typeof(Swiper) !== 'undefined') {
     var swiper = new Swiper('.home-slider', {
         spaceBetween: 30,
@@ -75,8 +78,6 @@ function fadeAllAlerts() {
     }, 3000);
 }
 
-fadeAllAlerts();
-
 $('.star').click((event) => {
     $('.form-group .star').removeClass('active');
     event.currentTarget.classList.add('active');
@@ -114,7 +115,7 @@ function showPage(button) {
     sessionStorage.setItem('adminPage', page);
 
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: 'partial?name=' + page,
         success: function (response) {
             $('#main-content-wrapper').html(response);
@@ -150,7 +151,7 @@ function showModal(modalType, button) {
 
         case 'change':
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 url: '/get-meal',
                 data: { id: button.parentNode.dataset.id },
                 success: function (response) {
@@ -181,4 +182,95 @@ function showModal(modalType, button) {
 
 function reloadPage() {
     location.reload();
+}
+
+function addToCart(meal) {
+    $.ajax({
+        type: 'POST',
+        url: '/add-to-cart',
+        data: { 
+            id: meal['id'],
+            title: meal['title'],
+            description: meal['description'],
+            price: meal['price'],
+            image: meal['image'],
+        },
+        success: function () {
+            updateCart();
+        },
+        error: function (err) {
+            console.log(err);
+        },
+    });
+}
+
+function updateCart()
+{
+    $.ajax({
+        type: 'POST',
+        url: '/get-cart',
+        success: function (response) {
+            $('#cart-wrapper').html(response);
+            getCartTotalAmount();
+        },
+        error: function (err) {
+            console.log(err);
+        },
+    });
+}
+
+function getCartTotalAmount()
+{
+    $.ajax({
+        type: 'POST',
+        url: '/get-cart-total-amount',
+        success: function (response) {
+            $('#cart-counter').text(response);
+        },
+        error: function (err) {
+            console.log(err);
+        },
+    });
+}
+
+function changeCount(button, operator)
+{
+    let number = 0;
+    if (operator === '+') {
+        number = 1;
+    } else if (operator === '-') {
+        number = -1;
+    }
+    
+    $.ajax({
+        type: 'POST',
+        url: '/change-cart-count',
+        data: {
+            'id': button.parentNode.parentNode.parentNode.dataset.mealId,
+            'number': number
+        },
+        success: function () {
+            updateCart();
+        },
+        error: function (err) {
+            console.log(err);
+        },
+    });
+}
+
+function deleteCartMeal(button)
+{
+    $.ajax({
+        type: 'POST',
+        url: '/delete-cart-meal',
+        data: {
+            'id': button.parentNode.parentNode.dataset.mealId
+        },
+        success: function (response) {
+            updateCart();
+        },
+        error: function (err) {
+            console.log(err);
+        },
+    });
 }
