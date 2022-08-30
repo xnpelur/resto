@@ -116,7 +116,8 @@ function showPage(button) {
 
     $.ajax({
         type: 'POST',
-        url: 'partial?name=' + page,
+        url: '/partial',
+        data: { name: page },
         success: function (response) {
             $('#main-content-wrapper').html(response);
             document.getElementById('page-title').textContent = pageTitles[page];
@@ -130,10 +131,14 @@ function showPage(button) {
     });
 }
 
-function showModal(modalType, button) {
+function showModal(modalType, button = null) {
     switch (modalType) {
         case 'review':
             $('#modal-review').modal('show');
+            break;
+
+        case 'order':
+            $('#modal-order').modal('show');
             break;
 
         case 'add':
@@ -212,6 +217,7 @@ function updateCart()
         success: function (response) {
             $('#cart-wrapper').html(response);
             getCartTotalAmount();
+            getCartTotalSum();
         },
         error: function (err) {
             console.log(err);
@@ -225,7 +231,28 @@ function getCartTotalAmount()
         type: 'POST',
         url: '/get-cart-total-amount',
         success: function (response) {
-            $('#cart-counter').text(response);
+            $('.cart-count').text(response);
+            if (parseInt(response) === 0) {
+                $('.empty-cart').removeClass('hidden');
+                $('.filled-cart').addClass('hidden');
+            } else {
+                $('.empty-cart').addClass('hidden');
+                $('.filled-cart').removeClass('hidden');
+            }
+        },
+        error: function (err) {
+            console.log(err);
+        },
+    });
+}
+
+function getCartTotalSum()
+{
+    $.ajax({
+        type: 'POST',
+        url: '/get-cart-total-sum',
+        success: function (response) {
+            $('.cart-sum').text(response);
         },
         error: function (err) {
             console.log(err);
@@ -266,7 +293,7 @@ function deleteCartMeal(button)
         data: {
             'id': button.parentNode.parentNode.dataset.mealId
         },
-        success: function (response) {
+        success: function () {
             updateCart();
         },
         error: function (err) {

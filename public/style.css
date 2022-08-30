@@ -500,7 +500,7 @@ header .icons #menu-bars {
     color: var(--light-color);
 }
 
-.order form {
+#order-container {
     max-width: 150rem;
     border-radius: 0.5rem;
     box-shadow: var(--box-shadow);
@@ -509,27 +509,28 @@ header .icons #menu-bars {
     padding: 1.5rem;
     margin: 0 auto;
     font-size: 24px;
+    text-align: center;
 }
 
-.order form .inputBox {
+#order-container .inputBox {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.order form .inputBox .input {
+#order-container .inputBox .input {
     width: 95%;
 }
 
-.order form .inputBox .input span {
+#order-container .inputBox .input span {
     display: block;
     padding: 0.5rem 0;
     font-size: 1.5rem;
     color: var(--light-color);
 }
 
-.order form .inputBox .input input,
-.order form .inputBox .input textarea {
+#order-container .inputBox .input input,
+#order-container .inputBox .input textarea {
     background: #eee;
     border-radius: 0.5rem;
     padding: 1rem;
@@ -540,18 +541,20 @@ header .icons #menu-bars {
     width: 100%;
 }
 
-.order form .inputBox .input input:focus,
-.order form .inputBox .input textarea:focus {
+#order-container .inputBox .input input:focus,
+#order-container .inputBox .input textarea:focus {
     border: 0.1rem solid var(--green);
 }
 
-.order form .inputBox .input textarea {
+#order-container .inputBox .input textarea {
     height: 20rem;
     resize: none;
 }
 
-.order form .btn-custom {
-    margin-top: 0;
+#order-container .total-sum {
+    text-align-last: left;
+    font-size: 32px;
+    margin-left: 80%;
 }
 
 .order table img {
@@ -574,9 +577,21 @@ header .icons #menu-bars {
     color: var(--black);
 }
 
-.order button {
+.order table button {
     font-size: 24px;
     padding: 5px 30px;
+}
+
+.order-button {
+    font-size: 28px;
+    padding: 10px 37px;
+    text-align: right;
+    margin: 30px 0;
+}
+
+.order form p {
+    text-align: right;
+    margin-right: 20px;
 }
 
 .footer .box-container {
@@ -1094,7 +1109,7 @@ input[type='number'] {
     font-size: 18px;
 }
 
-#cart-counter {
+header .icons .cart-count {
     font-size: 22px;
     font-weight: bold;
     color: var(--black);
@@ -1282,7 +1297,7 @@ input[type='number'] {
         width: 100%;
     }
 
-    .order form .inputBox .input {
+    #order-container .inputBox .input {
         width: 100%;
     }
 }

@@ -8,6 +8,7 @@ class Session
 {
     private static array $shoppingCart;
     private static int $totalAmount;
+    private static float $totalSum;
 
     public static function start()
     {
@@ -21,6 +22,7 @@ class Session
 
         self::$shoppingCart = $_SESSION['shopping-cart'] ?? [];
         self::$totalAmount = $_SESSION['total-amount'] ?? 0;
+        self::$totalSum = $_SESSION['total-sum'] ?? 0;
     }
 
     public static function setFlashMessage($key, $message)
@@ -66,9 +68,9 @@ class Session
     public static function addToShoppingCart($meal)
     {
         $mealIndex = -1;
-        for ($i = 0; $i < count(self::$shoppingCart); $i++) {
-            if (self::$shoppingCart[$i]->id === $meal->id) {
-                $mealIndex = $i;
+        foreach (self::$shoppingCart as $key => $value) {
+            if ($value->id === $meal->id) {
+                $mealIndex = $key;
                 break;
             }
         }
@@ -81,6 +83,7 @@ class Session
         }
         
         self::$totalAmount += 1;
+        self::$totalSum += $meal->price;
     }
 
     public static function getShoppingCart()
@@ -93,14 +96,20 @@ class Session
         return self::$totalAmount;
     }
 
+    public static function getCartTotalSum()
+    {
+        return self::$totalSum;
+    }
+
     public static function changeCartCount(array $data)
     {
-        for ($i = 0; $i < count(self::$shoppingCart); $i++) {
-            if (self::$shoppingCart[$i]->id === $data['id']) {
-                self::$shoppingCart[$i]->count += $data['number'];
+        foreach (self::$shoppingCart as $key => $value) {
+            if ($value->id === $data['id']) {
+                $value->count += $data['number'];
                 self::$totalAmount += $data['number'];
-                if (self::$shoppingCart[$i]->count <= 0) {
-                    unset(self::$shoppingCart[$i]);
+                self::$totalSum += $data['number'] * $value->price;
+                if ($value->count <= 0) {
+                    unset(self::$shoppingCart[$key]);
                 }
                 break;
             }
@@ -109,13 +118,21 @@ class Session
 
     public static function deleteCartMeal(int $id)
     {
-        for ($i = 0; $i < count(self::$shoppingCart); $i++) {
-            if (self::$shoppingCart[$i]->id == $id) {
-                self::$totalAmount -= self::$shoppingCart[$i]->count;
-                unset(self::$shoppingCart[$i]);
+        foreach (self::$shoppingCart as $key => $value) {
+            if ($value->id == $id) {
+                self::$totalAmount -= $value->count;
+                self::$totalSum -= $value->count * $value->price;
+                unset(self::$shoppingCart[$key]);
                 break;
             }
         }
+    }
+
+    public static function clearCart()
+    {
+        self::$shoppingCart = [];
+        self::$totalAmount = 0;
+        self::$totalSum = 0;
     }
 
     public static function end()
@@ -130,5 +147,6 @@ class Session
         
         $_SESSION['shopping-cart'] = self::$shoppingCart;
         $_SESSION['total-amount'] = self::$totalAmount;
+        $_SESSION['total-sum'] = self::$totalSum;
     }
 }

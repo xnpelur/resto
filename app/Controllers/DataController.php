@@ -116,4 +116,26 @@ class DataController extends Controller
     {
         echo Session::getCartTotalAmount();
     }
+
+    public function getCartTotalSum()
+    {
+        echo Session::getCartTotalSum();
+    }
+
+    public function addOrder()
+    {
+        $postData = $this->getRequestBody();
+        $data = [
+            'name' => $postData['order-name'],
+            'phone' => $postData['order-phone'],
+            'adress' => $postData['order-adress'],
+            'cart' => Session::getShoppingCart(),
+            'sum' => Session::getCartTotalSum(),
+        ];
+        
+        $this->orders->add($data);
+        Session::clearCart();
+
+        $this->redirect('/');
+    }
 }

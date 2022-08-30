@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Session;
 use App\Widgets\Form;
 use App\Widgets\Modal;
 use App\Widgets\FlashMessage;
@@ -39,7 +40,7 @@ use App\Widgets\FlashMessage;
         <div class="icons">
             <i class="fas fa-bars" id="menu-bars" onclick="toggleMenu()"></i>
             <a href="#order" class="fas fa-shopping-cart"></a>
-            <span id="cart-counter"></span>
+            <span class="cart-count"></span>
         </div>
 
     </header>
@@ -172,7 +173,7 @@ use App\Widgets\FlashMessage;
 
         </div>
 
-        <div class="review-button-wrapper" onclick="showModal('review', this)">
+        <div class="review-button-wrapper" onclick="showModal('review')">
             <button class="btn-custom">Оставить отзыв</button>
         </div>
 
@@ -208,7 +209,38 @@ use App\Widgets\FlashMessage;
 
         <h1 class="heading">Заказать</h1>
 
-        <div id="cart-wrapper"></div>
+        <div id="order-container">
+
+            <div class="empty-cart">
+                <h3>В вашей корзине пусто</h3>
+                <a href="#menu" class="btn-custom">Перейти к меню</a>
+            </div>
+
+            <div class="filled-cart hidden">
+                <div id="cart-wrapper"></div>
+
+                <p class="total-sum">Итого: $<span class="cart-sum">0</span></p>
+                <button type="button" class="btn-custom order-button" onclick="showModal('order')">Оформить заказ</button>
+
+            </div>
+
+        </div>
+
+        <?php
+        Modal::open('Оформить заказ', 'modal-order');
+        Form::open('/add-order', 'POST');
+        echo '<div class="modal-body">';
+
+        Form::field('Имя', 'order-name', ['minimal' => true]);
+        Form::field('Номер телефона', 'order-phone', ['minimal' => true]);
+        Form::field('Адрес', 'order-adress', ['minimal' => true]);
+        echo '<p>Итоговая сумма: $<span class="cart-sum"></span></p>';
+
+        echo '</div>';
+        Form::buttons('modal-submit');
+        Form::end();
+        Modal::end();
+        ?>
 
     </section>
 
