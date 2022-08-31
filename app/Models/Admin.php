@@ -34,7 +34,7 @@ class Admin extends Model
         return $data;
     }
 
-    public function setAdminData($data)
+    public function setAdminData(array $data)
     {
         if ($data['admin-password'] !== $data['admin-password-confirm']) {
             Session::setFlashMessage('admin-danger', 'Пароли не совпадают');

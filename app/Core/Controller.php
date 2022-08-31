@@ -10,11 +10,11 @@ use App\Models\Reviews;
 
 class Controller
 {
-    public Menu $menu;
-    public Options $options;
-    public Reviews $reviews;
-    public Admin $admin;
-    public Orders $orders;
+    protected Menu $menu;
+    protected Options $options;
+    protected Reviews $reviews;
+    protected Admin $admin;
+    protected Orders $orders;
 
     public function __construct()
     {
@@ -23,9 +23,11 @@ class Controller
         $this->reviews = new Reviews();
         $this->admin = new Admin();
         $this->orders = new Orders();
+
+        Session::start();
     }
 
-    public function render($view, $data = [])
+    protected function render(string $view, array $data = [])
     {
         return Router::renderView($view, $data);
     }
@@ -35,9 +37,14 @@ class Controller
         return Request::getBody();
     }
 
-    protected function redirect($path)
+    protected function redirect(string $path)
     {
         header('Location: ' . $path);
         exit;
+    }
+
+    public function __destruct()
+    {
+        Session::end();
     }
 }

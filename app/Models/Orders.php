@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
+use App\Core\Session;
 
 class Orders extends Model
 {
@@ -12,5 +13,16 @@ class Orders extends Model
         unset($data['cart']);
 
         $this->insertTo('orders', $data);
+        Session::setFlashMessage('home-success', 'Ваш заказ оформлен!');
+    }
+    
+    public function get()
+    {
+        return $this->getFieldsFrom('orders');
+    }
+
+    public function delete(int $id)
+    {
+        $this->deleteFrom('orders', "id = $id");  
     }
 }

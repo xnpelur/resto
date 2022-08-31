@@ -25,7 +25,7 @@ class Session
         self::$totalSum = $_SESSION['total-sum'] ?? 0;
     }
 
-    public static function setFlashMessage($key, $message)
+    public static function setFlashMessage(string $key, string $message)
     {
         $_SESSION['flash_messages'][$key] = [
             'remove' => false,
@@ -33,7 +33,7 @@ class Session
         ];
     }
 
-    public static function getFlashMessage($key)
+    public static function getFlashMessage(string $key)
     {
         return $_SESSION['flash_messages'][$key]['message'] ?? false;
     }
@@ -65,7 +65,7 @@ class Session
         unset($_SESSION['password']);
     }
 
-    public static function addToShoppingCart($meal)
+    public static function addToShoppingCart(object $meal)
     {
         $mealIndex = -1;
         foreach (self::$shoppingCart as $key => $value) {

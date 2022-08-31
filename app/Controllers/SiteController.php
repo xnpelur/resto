@@ -46,7 +46,9 @@ class SiteController extends Controller
         }
 
         $data = [];
-        if ($name === 'menu') {
+        if ($name === 'orders') {
+            $data['orders'] = $this->orders->get();
+        } else if ($name === 'menu') {
             $data['specialMeals'] = $this->menu->get('special');
             $data['regularMeals'] = $this->menu->get('regular');
         } else if ($name === 'reviews') {

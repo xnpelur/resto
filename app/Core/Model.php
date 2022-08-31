@@ -4,42 +4,35 @@ namespace App\Core;
 
 class Model
 {
-    protected Database $db;
-
-    public function __construct()
-    {
-        $this->db = Application::$app->db;
-    }
-
-    public function getFieldsFrom($table, $where = '')
+    protected function getFieldsFrom(string $table, string $where = '')
     {
         $sql = "SELECT * FROM $table";
         if ($where !== '') {
             $sql .= " WHERE " . $where;
         }
 
-        return $this->db->query($sql);
+        return Database::query($sql);
     }
 
-    public function insertTo(string $table, array $args)
+    protected function insertTo(string $table, array $args)
     {
         $params = array_keys($args);
         $placeholders = array_map(fn($s) => ":$s", $params);
 
         $sql = "INSERT INTO $table (" . implode(', ', $params) . ") VALUES (" . implode(', ', $placeholders) . ")";
 
-        $this->db->executePrepared($sql, $args);
+        Database::executePrepared($sql, $args);
     }
 
-    public function update(string $table, array $args, int $id)
+    protected function update(string $table, array $args, int $id)
     {
         $params = array_map(fn($s) => "$s = :$s", array_keys($args));
         $sql = "UPDATE $table SET " . implode(', ', $params) . " WHERE id = $id";
 
-        $this->db->executePrepared($sql, $args);
+        Database::executePrepared($sql, $args);
     }
 
-    public function updateColumns($table, array $args)
+    protected function updateColumns(string $table, array $args)
     {
         $params = [];
         foreach ($args as $key => $value) {
@@ -52,19 +45,19 @@ class Model
 
         $sql = "UPDATE $table SET value = CASE " . implode(' ', $params) . " ELSE `value` END";
 
-        $this->db->executePrepared($sql, $args);
+        Database::executePrepared($sql, $args);
     }
 
-    public function deleteFrom($table, $where)
+    protected function deleteFrom(string $table, string $where)
     {
         $sql = "DELETE FROM $table WHERE $where";
-        $this->db->query($sql);
+        Database::query($sql);
     }
 
     protected function uploadImage(array $image)
     {
         $targetFile = 'storage/' . basename($image['name']);
-        $targetFileFull = Application::$ROOT_DIR . '/public/' . $targetFile;
+        $targetFileFull = dirname(__DIR__, 2) . '/public/' . $targetFile;
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
         if (($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") || getimagesize($image['tmp_name']) === false) {
@@ -98,14 +91,14 @@ class Model
         }
     }
 
-    protected function checkImage($image)
+    protected function checkImage(string $imagePath)
     {
-        $imageCount = count($this->getFieldsFrom('menu', "image = '$image'"))
-            + count($this->getFieldsFrom('reviews', "image = '$image'"))
-            + count($this->getFieldsFrom('options', "value = '$image'"));
+        $imageCount = count($this->getFieldsFrom('menu', "image = '$imagePath'"))
+            + count($this->getFieldsFrom('reviews', "image = '$imagePath'"))
+            + count($this->getFieldsFrom('options', "value = '$imagePath'"));
         
-        if ($imageCount === 0 && file_exists($image)) {
-            unlink($image);
+        if ($imageCount === 0 && file_exists($imagePath)) {
+            unlink($imagePath);
         }
     }
 }

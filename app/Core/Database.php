@@ -6,10 +6,12 @@ use PDO;
 
 class Database 
 {
-    public PDO $connection;
+    private static PDO $connection;
 
-    public function __construct()
+    public static function init()
     {
+        self::initializeEnvVariables();
+
         $hostname = getenv('DB_HOSTNAME') ?? '';
         $username = getenv('DB_USERNAME') ?? '';
         $password = getenv('DB_PASSWORD') ?? '';
@@ -17,18 +19,27 @@ class Database
 
         $dsn = "mysql:host=$hostname;dbname=$database";
 
-        $this->connection = new PDO($dsn, $username, $password);
+        self::$connection = new PDO($dsn, $username, $password);
     }
 
-    public function query(string $sql)
+    public static function query(string $sql)
     {
-        $result = $this->connection->query($sql);
+        $result = self::$connection->query($sql);
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function executePrepared(string $sql, array $args)
+    public static function executePrepared(string $sql, array $args)
     {        
-        $stmt = $this->connection->prepare($sql);
+        $stmt = self::$connection->prepare($sql);
         $stmt->execute($args);
+    }
+
+    private static function initializeEnvVariables()
+    {
+        $env = file(dirname(__DIR__, 2) . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($env as $line) {
+            putenv($line);
+        }
     }
 }

@@ -7,95 +7,25 @@
                 <table class="table table-hover table-borderless order-table">
                     <thead>
                         <tr>
-                            <th scope="col" width="3%">ID</th>
-                            <th scope="col" width="37%">Заказ</th>
-                            <th scope="col" width="15%">Имя</th>
-                            <th scope="col" width="15%">Телефон</th>
-                            <th scope="col" width="12%">Цена</th>
-                            <th scope="col" width="18%">Статус</th>
+                            <th scope="col" width="10%">Имя</th>
+                            <th scope="col" width="12%">Телефон</th>
+                            <th scope="col" width="25%">Адрес</th>
+                            <th scope="col" width="30%">Заказ</th>
+                            <th scope="col" width="10%">Цена</th>
+                            <th scope="col" width="13%"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">6</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">7</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">8</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">9</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">10</th>
-                            <td>Пицца, Гамбургер, Салат</td>
-                            <td>Александр</td>
-                            <td>+123 456 78 90</td>
-                            <td>700 рублей</td>
-                            <td>В процессе</td>
-                        </tr>
+                        <?php foreach ($orders as $order) : ?>
+                            <tr>
+                                <td><?= $order->name ?></td>
+                                <td><?= $order->phone ?></td>
+                                <td><?= $order->adress ?></td>
+                                <td><?= str_replace(', ', '<br>', $order->text) ?></td>
+                                <td>$<?= $order->sum ?></td>
+                                <td class="btn-wrapper"><button class="btn btn-success" onclick="deleteOrder(<?= $order->id ?>)">Готово</button></td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

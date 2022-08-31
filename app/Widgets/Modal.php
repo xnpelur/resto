@@ -4,7 +4,7 @@ namespace App\Widgets;
 
 class Modal
 {
-    public static function open($title, $id)
+    public static function open(string $title, string $id)
     {
         echo "<div class='modal top fade' id='$id' tabindex='-1' aria-labelledby='$id-label' aria-hidden='true' data-mdb-backdrop='true' data-mdb-keyboard='true'>
             <div class='modal-dialog modal-md'>

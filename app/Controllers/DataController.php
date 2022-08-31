@@ -138,4 +138,10 @@ class DataController extends Controller
 
         $this->redirect('/');
     }
+
+    public function deleteOrder()
+    {
+        $id = $this->getRequestBody()['id'];
+        $this->orders->delete($id);
+    }
 }

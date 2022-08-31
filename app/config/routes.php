@@ -30,3 +30,4 @@ Router::post('/delete-cart-meal', [DataController::class, 'deleteCartMeal']);
 Router::post('/get-cart-total-amount', [DataController::class, 'getCartTotalAmount']);
 Router::post('/get-cart-total-sum', [DataController::class, 'getCartTotalSum']);
 Router::post('/add-order', [DataController::class, 'addOrder']);
+Router::post('/delete-order', [DataController::class, 'deleteOrder']);

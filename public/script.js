@@ -301,3 +301,19 @@ function deleteCartMeal(button)
         },
     });
 }
+
+function deleteOrder(id) {
+    $.ajax({
+        type: 'POST',
+        url: '/delete-order',
+        data: {
+            'id': id
+        },
+        success: function () {
+            initAdminPages();
+        },
+        error: function (err) {
+            console.log(err);
+        },
+    });
+}

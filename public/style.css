@@ -867,15 +867,28 @@ header .icons #menu-bars {
 #admin-panel .order-table {
     font-size: 20px;
     table-layout: fixed;
-    text-align: center;
+    text-align: left;
 }
 
 #admin-panel .table-wrapper {
     padding: 10px 15px 1px;
 }
 
+#admin-panel .order-table th {
+    text-align: center;
+}
+
 #admin-panel .order-table td {
     padding: 10px 15px;
+}
+
+#admin-panel .order-table .btn-wrapper {
+    text-align: center;
+}
+
+#admin-panel .order-table button {
+    font-size: 18px;
+    width: 70%;
 }
 
 #admin-panel .menu {

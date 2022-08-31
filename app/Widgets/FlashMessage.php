@@ -6,7 +6,7 @@ use App\Core\Session;
 
 class FlashMessage
 {
-    public static function show($name)
+    public static function show(string $name)
     {
         if ($message = Session::getFlashMessage("$name-success")) {
             $messageType = 'success';
@@ -21,7 +21,7 @@ class FlashMessage
         </div>";
     }
 
-    public static function showError($name)
+    public static function showError(string $name)
     {
         if ($message = Session::getFlashMessage("$name-error")) {
             echo "<p class='error'>$message</p>";

@@ -8,12 +8,12 @@ class Router
 {
     private static array $routes = [];
 
-    public static function get($path, $callback)
+    public static function get(string $path, $callback)
     {
         self::$routes['get'][$path] = $callback;
     }
 
-    public static function post($path, $callback)
+    public static function post(string $path, $callback)
     {
         self::$routes['post'][$path] = $callback;
     }
@@ -31,20 +31,18 @@ class Router
 
         if (is_string($callback)) {
             return self::renderView($callback);
-        }
-
-        if (is_array($callback)) {
+        } else if (is_array($callback)) {
             $callback[0] = new $callback[0]();
         }
 
         return call_user_func($callback);
     }
 
-    public static function renderView($view, $data = [])
+    public static function renderView(string $view, array $data = [])
     {
         foreach ($data as $key => $value) {
             $$key = $value;
         }
-        include_once Application::$ROOT_DIR . "/app/Views/$view.php";
+        include_once dirname(__DIR__) . "/Views/$view.php";
     }
 }

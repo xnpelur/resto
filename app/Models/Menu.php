@@ -7,9 +7,9 @@ use App\Core\Session;
 
 class Menu extends Model
 {
-    public function get(string $type = '*')
+    public function get(string $type = '')
     {
-        return $this->getFieldsFrom('menu', "type = '$type'");
+        return $this->getFieldsFrom('menu', $type !== '' ? "type = '$type'" : '');
     }
 
     public function getMeal(int $id)
