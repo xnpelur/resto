@@ -20,7 +20,7 @@ class DataController extends Controller
         $id = $this->getRequestBody()['id'];
         $meal = $this->menu->getMeal($id)[0];
 
-        return json_encode($meal);
+        echo json_encode($meal);
     }
 
     public function changeMeal()

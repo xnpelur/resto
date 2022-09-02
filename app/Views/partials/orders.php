@@ -3,7 +3,7 @@
     <div class="row my-5">
         <h3 class="fs-4 mb-3">Последние заказы</h3>
         <div class="col">
-            <div class="bg-white rounded shadow-sm table-wrapper">
+            <div class="bg-white rounded shadow-sm table-wrapper order-table-wrapper">
                 <table class="table table-hover table-borderless order-table">
                     <thead>
                         <tr>

@@ -4,6 +4,7 @@ namespace App\Core;
 
 class Model
 {
+    /** Return array of objects stored inside $table */
     protected function getFieldsFrom(string $table, string $where = '')
     {
         $sql = "SELECT * FROM $table";
@@ -14,6 +15,7 @@ class Model
         return Database::query($sql);
     }
 
+    /** Insert new row to $table */
     protected function insertTo(string $table, array $args)
     {
         $params = array_keys($args);
@@ -24,6 +26,7 @@ class Model
         Database::executePrepared($sql, $args);
     }
 
+    /** Update value with $id inside $table */
     protected function update(string $table, array $args, int $id)
     {
         $params = array_map(fn($s) => "$s = :$s", array_keys($args));
@@ -32,7 +35,8 @@ class Model
         Database::executePrepared($sql, $args);
     }
 
-    protected function updateColumns(string $table, array $args)
+    /** Update each $args key to $args value inside $table */
+    protected function updateValues(string $table, array $args)
     {
         $params = [];
         foreach ($args as $key => $value) {
@@ -48,12 +52,14 @@ class Model
         Database::executePrepared($sql, $args);
     }
 
+    /** Delete row from $table */
     protected function deleteFrom(string $table, string $where)
     {
         $sql = "DELETE FROM $table WHERE $where";
         Database::query($sql);
     }
 
+    /** Upload image from user with validation */
     protected function uploadImage(array $image)
     {
         $targetFile = 'storage/' . basename($image['name']);
@@ -91,6 +97,7 @@ class Model
         }
     }
 
+    /** Check if image defined by path is no longer used. If number of usages equals to 0, delete it. */
     protected function checkImage(string $imagePath)
     {
         $imageCount = count($this->getFieldsFrom('menu', "image = '$imagePath'"))

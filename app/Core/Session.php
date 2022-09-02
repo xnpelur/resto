@@ -10,6 +10,7 @@ class Session
     private static int $totalAmount;
     private static float $totalSum;
 
+    /** Initialize session, shopping cart, get flash messages */
     public static function start()
     {
         session_start();
@@ -44,6 +45,7 @@ class Session
         $_SESSION['password'] = $data['password'] ?? $_SESSION['password'];
     }
 
+    /** Try to log in as admin with credentials stored in session */
     public static function tryLogin()
     {
         if (!isset($_SESSION['login']) || !isset($_SESSION['password'])) {
@@ -65,6 +67,7 @@ class Session
         unset($_SESSION['password']);
     }
 
+    /** Add meal from menu to user's shopping cart */
     public static function addToShoppingCart(object $meal)
     {
         $mealIndex = -1;
@@ -101,6 +104,7 @@ class Session
         return self::$totalSum;
     }
 
+    /** Change amount of meal with id = $data['id'] to number = $data['number'] */
     public static function changeCartCount(array $data)
     {
         foreach (self::$shoppingCart as $key => $value) {
@@ -116,6 +120,7 @@ class Session
         }
     }
 
+    /** Delete meal in cart with given id */
     public static function deleteCartMeal(int $id)
     {
         foreach (self::$shoppingCart as $key => $value) {
@@ -135,6 +140,7 @@ class Session
         self::$totalSum = 0;
     }
 
+    /** Store all data in session to access on the next page */
     public static function end()
     {
         $flashMessages = $_SESSION['flash_messages'] ?? [];

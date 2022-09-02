@@ -510,6 +510,7 @@ header .icons #menu-bars {
     margin: 0 auto;
     font-size: 24px;
     text-align: center;
+    overflow-x: auto;
 }
 
 #order-container .inputBox {
@@ -554,7 +555,7 @@ header .icons #menu-bars {
 #order-container .total-sum {
     text-align-last: left;
     font-size: 32px;
-    margin-left: 80%;
+    margin-left: 5%;
 }
 
 .order table img {
@@ -585,7 +586,7 @@ header .icons #menu-bars {
 .order-button {
     font-size: 28px;
     padding: 10px 37px;
-    text-align: right;
+    text-align: center;
     margin: 30px 0;
 }
 
@@ -864,10 +865,16 @@ header .icons #menu-bars {
     height: 60%;
 }
 
-#admin-panel .order-table {
+
+#admin-panel .order-table-wrapper {
+    overflow-x: auto;
+}
+
+#admin-panel .order-table { 
     font-size: 20px;
     table-layout: fixed;
     text-align: left;
+    width: max(1500px, 100%);
 }
 
 #admin-panel .table-wrapper {
@@ -1298,6 +1305,14 @@ header .icons .cart-count {
     .home .home-slider .slide .content h3 {
         font-size: 5rem;
     }
+
+    .slider-button-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .login-wrapper {
+        margin: 10vh 10%;
+    }
 }
 
 @media (max-width: 450px) {
@@ -1312,6 +1327,10 @@ header .icons .cart-count {
 
     #order-container .inputBox .input {
         width: 100%;
+    }
+
+    .option-buttons {
+        margin-right: 0;
     }
 }
 

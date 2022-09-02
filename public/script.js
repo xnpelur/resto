@@ -58,9 +58,7 @@ if (typeof(Swiper) !== 'undefined') {
             if (top >= offset && top < offset + height) {
                 navLinks.forEach((links) => {
                     links.classList.remove('active');
-                    document
-                        .querySelector('header .navbar a[href*=' + id + ']')
-                        .classList.add('active');
+                    $('header .navbar a[href*=' + id + ']').addClass('active');
                 });
             }
         });
@@ -95,7 +93,8 @@ function initAdminPages() {
 }
 
 function resetActivePage() {
-    let buttons = Array.from(document.getElementById('page-buttons').children);
+    let buttons = $('#page-buttons').children().toArray();
+    
     buttons.forEach((button) => {
         button.classList.remove('active');
     });
@@ -120,7 +119,7 @@ function showPage(button) {
         data: { name: page },
         success: function (response) {
             $('#main-content-wrapper').html(response);
-            document.getElementById('page-title').textContent = pageTitles[page];
+            $('#page-title').text(pageTitles[page]);
             resetActivePage();
             button.classList.add('active');
             fadeAllAlerts();

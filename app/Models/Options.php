@@ -43,7 +43,7 @@ class Options extends Model
             $args['about_image'] = $imagePath;
         }
 
-        $this->updateColumns('options', $args);
+        $this->updateValues('options', $args);
 
         if (isset($lastImage)) {
             $this->checkImage($lastImage);

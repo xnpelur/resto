@@ -4,6 +4,7 @@ namespace App\Core;
 
 class Request
 {
+    /** Return site URL without GET arguments */
     public static function getPath()
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
@@ -14,11 +15,13 @@ class Request
         return substr($path, 0, $position);
     }
 
+    /** Return request method */
     public static function getMethod()
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
+    /** Return GET or POST (+ FILES) data from request */
     public static function getBody()
     {
         $body = [];

@@ -27,16 +27,19 @@ class Controller
         Session::start();
     }
 
+    /** Render given view with initializing $data variables */
     protected function render(string $view, array $data = [])
     {
         return Router::renderView($view, $data);
     }
 
+    /** Get request data (GET, POST, FILES) */
     protected function getRequestBody()
     {
         return Request::getBody();
     }
 
+    /** Redirect user to given path */
     protected function redirect(string $path)
     {
         header('Location: ' . $path);

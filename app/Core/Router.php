@@ -8,16 +8,19 @@ class Router
 {
     private static array $routes = [];
 
+    /** Define GET route with callback */
     public static function get(string $path, $callback)
     {
         self::$routes['get'][$path] = $callback;
     }
 
+    /** Define POST route with callback */
     public static function post(string $path, $callback)
     {
         self::$routes['post'][$path] = $callback;
     }
 
+    /** Resolve URL to page */
     public static function resolve()
     {
         $path = Request::getPath();
@@ -38,6 +41,7 @@ class Router
         return call_user_func($callback);
     }
 
+    /** Render $view with $data arguments */
     public static function renderView(string $view, array $data = [])
     {
         foreach ($data as $key => $value) {

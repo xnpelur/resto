@@ -8,6 +8,7 @@ class Database
 {
     private static PDO $connection;
 
+    /** Initialize environment variables and database connection */
     public static function init()
     {
         self::initializeEnvVariables();
@@ -22,12 +23,14 @@ class Database
         self::$connection = new PDO($dsn, $username, $password);
     }
 
+    /** Execute SQL statement without preparation */
     public static function query(string $sql)
     {
         $result = self::$connection->query($sql);
         return $result->fetchAll(PDO::FETCH_OBJ);
     }
 
+    /** Execute prepared SQL statement using given arguments */
     public static function executePrepared(string $sql, array $args)
     {        
         $stmt = self::$connection->prepare($sql);

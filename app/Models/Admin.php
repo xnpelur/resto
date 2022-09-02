@@ -54,7 +54,7 @@ class Admin extends Model
             $args['password'] = password_hash($data['admin-password'], PASSWORD_DEFAULT);
         }
         
-        $this->updateColumns('admin', $args);
+        $this->updateValues('admin', $args);
         Session::setLoginData([
             'login' => $data['admin-login'],
             'password' => $data['admin-password'] !== '' ? $data['admin-password'] : NULL
