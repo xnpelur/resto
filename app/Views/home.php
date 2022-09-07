@@ -1,6 +1,5 @@
 <?php
 
-use App\Core\Session;
 use App\Widgets\Form;
 use App\Widgets\Modal;
 use App\Widgets\FlashMessage;

@@ -8,15 +8,10 @@ class Database
 {
     private static PDO $connection;
 
-    /** Initialize environment variables and database connection */
+    /** Initialize database connection */
     public static function init()
     {
-        self::initializeEnvVariables();
-
-        $hostname = getenv('DB_HOSTNAME') ?? '';
-        $username = getenv('DB_USERNAME') ?? '';
-        $password = getenv('DB_PASSWORD') ?? '';
-        $database = getenv('DB_DATABASE') ?? '';
+        require dirname(__DIR__) . '/config/database.php';
 
         $dsn = "mysql:host=$hostname;dbname=$database";
 
@@ -35,14 +30,5 @@ class Database
     {        
         $stmt = self::$connection->prepare($sql);
         $stmt->execute($args);
-    }
-
-    private static function initializeEnvVariables()
-    {
-        $env = file(dirname(__DIR__, 2) . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
-        foreach ($env as $line) {
-            putenv($line);
-        }
     }
 }
